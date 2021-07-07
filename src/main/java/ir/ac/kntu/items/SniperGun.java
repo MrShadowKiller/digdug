@@ -1,4 +1,4 @@
-package ir.ac.kntu;
+package ir.ac.kntu.items;
 
 public class SniperGun extends Weapon{
     public SniperGun() {

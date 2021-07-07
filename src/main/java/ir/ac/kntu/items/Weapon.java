@@ -1,4 +1,4 @@
-package ir.ac.kntu;
+package ir.ac.kntu.items;
 
 public abstract class Weapon {
     private int hitRange;

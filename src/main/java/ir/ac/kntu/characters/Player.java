@@ -1,7 +1,7 @@
-package ir.ac.kntu;
+package ir.ac.kntu.characters;
 
-import javafx.scene.Group;
-import javafx.scene.Node;
+import ir.ac.kntu.items.AirGun;
+import ir.ac.kntu.items.Weapon;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-public class Player extends Pane {
+public class Player extends Pane implements Alive{
     private String name = "ALEX";
 
     private int totalGames = 0;
@@ -33,6 +33,7 @@ public class Player extends Pane {
     public Player(String name) {
         this.name = name;
         weapon = new AirGun();
+        applyImages();
     }
 
     public String getName() {
@@ -117,7 +118,15 @@ public class Player extends Pane {
         this.getChildren().add(currentImageView);
     }
 
-    public void move(GridPane gridPane){
 
+    @Override
+    public void move(int x, int y) {
+        GridPane.setRowIndex(this,GridPane.getRowIndex(this) + y);
+        GridPane.setColumnIndex(this,GridPane.getColumnIndex(this) + x);
+    }
+
+    @Override
+    public boolean isAlive() {
+        return hp >= 0;
     }
 }
