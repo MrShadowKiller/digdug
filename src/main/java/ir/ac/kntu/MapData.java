@@ -2,6 +2,7 @@ package ir.ac.kntu;
 
 import ir.ac.kntu.characters.Enemy;
 import ir.ac.kntu.characters.Player;
+import ir.ac.kntu.items.Block;
 import ir.ac.kntu.items.Dirt;
 import ir.ac.kntu.items.Item;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
 public class MapData {
     private ArrayList<Item> items;
 
-    private ArrayList<ArrayList<Dirt>> dirts;
+    private ArrayList<ArrayList<Block>> blocks;
 
     private ArrayList<Player> players;
 
@@ -21,9 +22,9 @@ public class MapData {
 
     public MapData() {
         items = new ArrayList<>();
-        dirts = new ArrayList<>();
+        blocks = new ArrayList<>();
         for (int i = 0;i<12;i++){
-            dirts.add(new ArrayList<>());
+            blocks.add(new ArrayList<>());
         }
         players = new ArrayList<>();
         enemies = new ArrayList<>();
@@ -38,12 +39,12 @@ public class MapData {
         this.items = items;
     }
 
-    public ArrayList<ArrayList<Dirt>> getDirts() {
-        return dirts;
+    public ArrayList<ArrayList<Block>> getBlocks() {
+        return blocks;
     }
 
-    public void setDirts(ArrayList<ArrayList<Dirt>> dirts) {
-        this.dirts = dirts;
+    public void setBlocks(ArrayList<ArrayList<Block>> blocks) {
+        this.blocks = blocks;
     }
 
     public ArrayList<Player> getPlayers() {

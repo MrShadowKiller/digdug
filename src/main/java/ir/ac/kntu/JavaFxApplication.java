@@ -8,6 +8,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -29,24 +31,11 @@ public class JavaFxApplication extends Application {
         root.setStyle("-fx-border-width: 0 0 5 0;");
         Dirt dirt = new Dirt();
 
-        Button button = new Button("Test");
-
         GridPane gridPane = new GridPane();
-//        Rectangle rectangle = new Rectangle(20, 30, Color.RED);
-//        Rectangle rectangle1 = new Rectangle(20, 30, Color.RED);
-//        Rectangle rectangle2 = new Rectangle(20, 30, Color.RED);
-//        Rectangle rectangle3 = new Rectangle(20, 30, Color.RED);
 
         MapData mapData = new MapData();
         MapBuilder mapBuilder = new MapBuilder(gridPane,mapData);
         mapBuilder.startBuild();
-//        gridPane.add(rectangle, 0, 0);
-//        gridPane.add(rectangle1, 1, 1);
-//        gridPane.add(rectangle2, 2, 0);
-//        gridPane.add(rectangle3, 2, 2);
-//        gridPane.add(dirt.getImageView(), 2, 3);
-
-//        gridPane.setLayoutY(100);
 
         gridPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
@@ -55,6 +44,7 @@ public class JavaFxApplication extends Application {
         root.setCenter(gridPane);
 
         Scene scene = new Scene(root, 600, 700, Color.rgb(240, 240, 240));
+
 //        scene.setOnKeyPressed(e -> {
 //
 //
