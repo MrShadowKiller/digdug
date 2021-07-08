@@ -18,7 +18,6 @@ public class Balloon extends Enemy{
             imageViews.add(new ImageView(image));
         }
 
-        setCurrentViewImage(imageViews.get(0));
-        this.getChildren().add(getCurrentViewImage());
+        setCurrentImageView(imageViews.get(0));
     }
 }

@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-public class Player extends Pane implements Alive{
+public class Player implements Alive{
     private String name = "ALEX";
 
     private int totalGames = 0;
@@ -115,14 +115,13 @@ public class Player extends Pane implements Alive{
         }
 
         currentImageView = imageViews.get(0);
-        this.getChildren().add(currentImageView);
     }
 
 
     @Override
     public void move(int x, int y) {
-        GridPane.setRowIndex(this,GridPane.getRowIndex(this) + y);
-        GridPane.setColumnIndex(this,GridPane.getColumnIndex(this) + x);
+        GridPane.setRowIndex(currentImageView,GridPane.getRowIndex(currentImageView) + y);
+        GridPane.setColumnIndex(currentImageView,GridPane.getColumnIndex(currentImageView) + x);
     }
 
     @Override

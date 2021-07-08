@@ -2,11 +2,10 @@ package ir.ac.kntu.characters;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-public abstract class Enemy extends Pane implements Alive{
+public abstract class Enemy implements Alive{
     private double xSpeed;
 
     private double ySpeed;
@@ -17,7 +16,7 @@ public abstract class Enemy extends Pane implements Alive{
 
     private ArrayList<ImageView> imageViews;
 
-    private ImageView currentViewImage;
+    private ImageView currentImageView;
 
 
     public Enemy(double xSpeed, double ySpeed, int hp) {
@@ -66,18 +65,18 @@ public abstract class Enemy extends Pane implements Alive{
         this.imageViews = imageViews;
     }
 
-    public ImageView getCurrentViewImage() {
-        return currentViewImage;
+    public ImageView getCurrentImageView() {
+        return currentImageView;
     }
 
-    public void setCurrentViewImage(ImageView currentViewImage) {
-        this.currentViewImage = currentViewImage;
+    public void setCurrentImageView(ImageView currentImageView) {
+        this.currentImageView = currentImageView;
     }
 
     @Override
     public void move(int x, int y){
-        GridPane.setRowIndex(this,GridPane.getRowIndex(this) + y);
-        GridPane.setColumnIndex(this,GridPane.getColumnIndex(this) + x);
+        GridPane.setRowIndex(currentImageView,GridPane.getRowIndex(currentImageView) + y);
+        GridPane.setColumnIndex(currentImageView,GridPane.getColumnIndex(currentImageView) + x);
     }
 
     @Override
