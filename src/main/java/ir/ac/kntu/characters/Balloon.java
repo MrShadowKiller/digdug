@@ -6,16 +6,18 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 
 public class Balloon extends Enemy{
-    public Balloon(double xSpeed, double ySpeed, int hp) {
-        super(xSpeed, ySpeed, hp);
-
+    public Balloon(double speed, int hp) {
+        super(speed, speed, hp);
+        applyImages();
     }
 
     public void applyImages(){
         ArrayList<ImageView> imageViews = getImageViews();
-        for (int i = 1;i<=8;i++){
-            Image image = new Image("assets\\enemy\\p" + i + ".png");
-            imageViews.add(new ImageView(image));
+        for (int i = 1;i<=6;i++){
+            ImageView imageView = new ImageView("assets\\enemy\\balloon\\p" + i + ".png");
+            imageView.setFitWidth(40);
+            imageView.setFitHeight(40);
+            imageViews.add(imageView);
         }
 
         setCurrentImageView(imageViews.get(0));

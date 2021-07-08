@@ -23,6 +23,7 @@ public abstract class Enemy implements Alive{
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.hp = hp;
+        imageViews = new ArrayList<>();
     }
 
     public double getxSpeed() {
@@ -58,7 +59,7 @@ public abstract class Enemy implements Alive{
     }
 
     public ArrayList<ImageView> getImageViews() {
-        return new ArrayList<>(imageViews);
+        return imageViews;
     }
 
     public void setImageViews(ArrayList<ImageView> imageViews) {

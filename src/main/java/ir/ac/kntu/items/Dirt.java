@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 public class Dirt extends Block{
 
     public Dirt() {
-        super(new ImageView(new Image("assets/dirt.png")));
+        super(new ImageView("assets/dirt.png"));
     }
 
 }

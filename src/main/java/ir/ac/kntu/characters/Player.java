@@ -33,7 +33,10 @@ public class Player implements Alive{
     public Player(String name) {
         this.name = name;
         weapon = new AirGun();
-        applyImages();
+//        applyImages();
+        currentImageView = new ImageView("assets\\player\\p1.png");
+        currentImageView.setFitHeight(40);
+        currentImageView.setFitWidth(40);
     }
 
     public String getName() {

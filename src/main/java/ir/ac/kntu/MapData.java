@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class MapData {
     private ArrayList<Item> items;
 
+    //Column then Row !
     private ArrayList<ArrayList<Block>> blocks;
 
     private ArrayList<Player> players;
@@ -23,7 +24,7 @@ public class MapData {
     public MapData() {
         items = new ArrayList<>();
         blocks = new ArrayList<>();
-        for (int i = 0;i<12;i++){
+        for (int i = 0;i<10;i++){
             blocks.add(new ArrayList<>());
         }
         players = new ArrayList<>();
@@ -56,12 +57,13 @@ public class MapData {
     }
 
     public ArrayList<Enemy> getEnemies() {
-        return new ArrayList<>(enemies);
+        return enemies;
     }
 
     public void setEnemies(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
     }
+
 
 
 }
