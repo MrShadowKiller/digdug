@@ -2,11 +2,13 @@ package ir.ac.kntu.characters;
 
 import ir.ac.kntu.MapData;
 import ir.ac.kntu.items.*;
+import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ public class Player implements Alive {
     private int playerHighScore = 0;
     private ArrayList<Image> images;
     private ImageView currentImageView;
+    private ImageView attackImageView;
 
     public Player(GridPane gridPane, MapData mapData, String name) {
         this.name = name;
@@ -43,6 +46,9 @@ public class Player implements Alive {
         currentImageView = new ImageView(images.get(0));
         currentImageView.setFitHeight(40);
         currentImageView.setFitWidth(40);
+        attackImageView = new ImageView("assets\\player\\w.png");
+        attackImageView.setFitWidth(40);
+        attackImageView.setFitHeight(40);
     }
 
     public boolean checkCollide(int row, int col) {
@@ -56,7 +62,7 @@ public class Player implements Alive {
             }
         } else {
             for (Enemy enemy : mapData.getEnemies()) {
-                if (!enemy.isAlive()){
+                if (!enemy.isAlive()) {
                     continue;
                 }
                 if (GridPane.getRowIndex(enemy.getCurrentImageView()) == row &&
@@ -91,7 +97,7 @@ public class Player implements Alive {
                 GridPane.setRowIndex(currentImageView, newRow);
                 GridPane.setColumnIndex(currentImageView, newCol);
             }
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Out Of Map!");
         }
 
@@ -108,28 +114,37 @@ public class Player implements Alive {
 
     }
 
+    @Override
+    public void deadAnimation() {
+
+    }
+
     public void changeDirection(Direction direction) {
         this.direction = direction;
         switch (direction) {
             case UP:
                 currentImageView.setRotationAxis(Rotate.Z_AXIS);
-                ;
+                attackImageView.setRotationAxis(Rotate.Z_AXIS);
                 currentImageView.setRotate(-90);
+                attackImageView.setRotate(-90);
                 break;
             case DOWN:
                 currentImageView.setRotationAxis(Rotate.Z_AXIS);
-                ;
+                attackImageView.setRotationAxis(Rotate.Z_AXIS);
                 currentImageView.setRotate(90);
+                attackImageView.setRotate(90);
                 break;
             case RIGHT:
                 currentImageView.setRotationAxis(Rotate.Y_AXIS);
-                ;
+                attackImageView.setRotationAxis(Rotate.Y_AXIS);
                 currentImageView.setRotate(360);
+                attackImageView.setRotate(360);
                 break;
             case LEFT:
                 currentImageView.setRotationAxis(Rotate.Y_AXIS);
-                ;
+                attackImageView.setRotationAxis(Rotate.Y_AXIS);
                 currentImageView.setRotate(180);
+                attackImageView.setRotate(180);
                 break;
         }
     }
@@ -139,6 +154,9 @@ public class Player implements Alive {
         int playerX = GridPane.getColumnIndex(currentImageView);
         int playerY = GridPane.getRowIndex(currentImageView);
         int col = playerX, row = playerY;
+        gridPane.add(attackImageView, playerX + direction.getX(), playerY + direction.getY());
+        attackAnimation();
+
         while (col - playerX < weapon.getHitRange() &&
                 row - playerY < weapon.getHitRange()) {
 
@@ -148,7 +166,7 @@ public class Player implements Alive {
                 if (!mapData.getBlocks().get(row).get(col).isUsed()) {
                     return;
                 }
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 return;
             }
 
@@ -160,6 +178,12 @@ public class Player implements Alive {
                 }
             }
         }
+    }
+
+    public void attackAnimation(){
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.3));
+        pauseTransition.setOnFinished(e -> gridPane.getChildren().remove(attackImageView));
+        pauseTransition.play();
     }
 
 

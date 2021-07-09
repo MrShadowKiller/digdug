@@ -33,7 +33,9 @@ public class GameLogic {
         Player player = new Player(gridPane,mapData,"mamad");
         mapData.setCurrentPlayer(player);
         mapBuilder.startBuild(player);
+
         scene.setOnKeyPressed(new KeyLogger(mapData));
+
 
     }
 }

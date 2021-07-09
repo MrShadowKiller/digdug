@@ -1,9 +1,6 @@
 package ir.ac.kntu;
 
-import ir.ac.kntu.characters.Balloon;
-import ir.ac.kntu.characters.Dragon;
-import ir.ac.kntu.characters.Enemy;
-import ir.ac.kntu.characters.Player;
+import ir.ac.kntu.characters.*;
 import ir.ac.kntu.items.Block;
 import ir.ac.kntu.items.Dirt;
 import ir.ac.kntu.items.Stone;
@@ -148,6 +145,10 @@ public class MapBuilder {
             mapData.getEnemies().add(new Balloon(1,2,gridPane,mapData));
         }
         mapData.getEnemies().add(new Dragon(1,3,gridPane,mapData));
+        for (int i = 0;i<4;i++){
+            Thread thread = new Thread(new EnemyAI(enemies.get(i),gridPane,mapData));
+            thread.start();
+        }
 
     }
 

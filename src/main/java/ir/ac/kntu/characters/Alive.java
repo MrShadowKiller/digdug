@@ -9,4 +9,6 @@ public interface Alive {
     boolean isAlive();
 
     void getHit(int damage);
+
+    void deadAnimation();
 }
