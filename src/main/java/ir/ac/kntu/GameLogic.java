@@ -31,30 +31,9 @@ public class GameLogic {
 
     public void start() {
         Player player = new Player(gridPane,mapData,"mamad");
+        mapData.setCurrentPlayer(player);
         mapBuilder.startBuild(player);
+        scene.setOnKeyPressed(new KeyLogger(mapData));
 
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case W:
-                    player.move(0, -1);
-                    player.changeDirection(UP);
-                    break;
-                case S:
-                    player.move(0, 1);
-                    player.changeDirection(DOWN);
-                    break;
-                case D:
-                    player.move(1, 0);
-                    player.changeDirection(RIGHT);
-                    break;
-                case A:
-                    player.move(-1, 0);
-                    player.changeDirection(LEFT);
-                    break;
-                case SHIFT:
-                    player.attack();
-                    break;
-            }
-        });
     }
 }

@@ -12,14 +12,16 @@ import java.util.HashMap;
 public class MapData {
     private ArrayList<Item> items;
 
-    //Column then Row !
     private ArrayList<ArrayList<Block>> blocks;
 
     private ArrayList<Player> players;
 
+    private Player currentPlayer;
+
     private ArrayList<Enemy> enemies;
 
     HashMap<Integer,Integer> emptyBlocks;
+
 
     public MapData() {
         items = new ArrayList<>();
@@ -64,6 +66,11 @@ public class MapData {
         this.enemies = enemies;
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 
-
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 }

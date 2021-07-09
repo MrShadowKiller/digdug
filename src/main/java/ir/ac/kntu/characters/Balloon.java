@@ -1,6 +1,7 @@
 package ir.ac.kntu.characters;
 
 import ir.ac.kntu.MapData;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -29,14 +30,15 @@ public class Balloon extends Enemy {
     public void getHit(int damage) {
         setHp(getHp() - damage);
         if (!isAlive()) {
-            getCurrentImageView().setImage(getImages().get(5));
-            System.out.println("salam");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
+//            Thread thread = new Thread(new DeadAnimation(getGridPane(),this));
+//            thread.start();
+//            try {
+//                Thread.sleep(3000);
+//            } catch (Exception e){
+//
+//            }
             getGridPane().getChildren().remove(this.getCurrentImageView());
+
         } else {
             getCurrentImageView().setImage(getImages().get(4));
         }

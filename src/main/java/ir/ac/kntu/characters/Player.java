@@ -46,13 +46,12 @@ public class Player implements Alive {
     }
 
     public boolean checkCollide(int row, int col) {
-        System.out.println(row + " sss " + col);
         if (!mapData.getBlocks().get(row).get(col).isUsed()) {
             if (mapData.getBlocks().get(row).get(col) instanceof Dirt) {
                 collisionWithStone(row, col);
                 return false;
             } else {
-                System.out.println("STONE");
+                System.out.println("Collided STONE!");
                 return true;
             }
         } else {
@@ -62,7 +61,7 @@ public class Player implements Alive {
                 }
                 if (GridPane.getRowIndex(enemy.getCurrentImageView()) == row &&
                         GridPane.getColumnIndex(enemy.getCurrentImageView()) == col) {
-                    System.out.println("ENEMY");
+                    System.out.println("Collided ENEMY!");
                     return true;
                 }
             }
@@ -83,15 +82,19 @@ public class Player implements Alive {
     public void move(int x, int y) {
         int newRow = GridPane.getRowIndex(currentImageView) + y * ySpeed;
         int newCol = GridPane.getColumnIndex(currentImageView) + x * xSpeed;
+        try {
+            if (!checkCollide(newRow, newCol)) {
+                System.out.println("Player Location : " + newRow + " " + newCol);
+                mapData.getBlocks().get(newRow).get(newCol).setUsed(true);
+                gridPane.getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
 
-        if (!checkCollide(newRow, newCol)) {
-
-            mapData.getBlocks().get(newRow).get(newCol).setUsed(true);
-            gridPane.getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
-
-            GridPane.setRowIndex(currentImageView, newRow);
-            GridPane.setColumnIndex(currentImageView, newCol);
+                GridPane.setRowIndex(currentImageView, newRow);
+                GridPane.setColumnIndex(currentImageView, newCol);
+            }
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Out Of Map!");
         }
+
 
     }
 
@@ -136,21 +139,24 @@ public class Player implements Alive {
         int playerX = GridPane.getColumnIndex(currentImageView);
         int playerY = GridPane.getRowIndex(currentImageView);
         int col = playerX, row = playerY;
-        System.out.println(row + " At first " + col);
         while (col - playerX < weapon.getHitRange() &&
                 row - playerY < weapon.getHitRange()) {
 
             col += direction.getX();
             row += direction.getY();
-            if (!mapData.getBlocks().get(row).get(col).isUsed()) {
+            try {
+                if (!mapData.getBlocks().get(row).get(col).isUsed()) {
+                    return;
+                }
+            } catch (IndexOutOfBoundsException e){
                 return;
             }
-            System.out.println(row + " vvvv " + col);
 
             for (Enemy enemy : mapData.getEnemies()) {
                 if (GridPane.getRowIndex(enemy.getCurrentImageView()) == row &&
                         GridPane.getColumnIndex(enemy.getCurrentImageView()) == col) {
                     enemy.getHit(weapon.getDamage());
+                    System.out.println("Enemy got hit at : " + row + " " + col);
                 }
             }
         }
