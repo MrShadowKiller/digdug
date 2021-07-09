@@ -21,10 +21,9 @@ public class MapBuilder {
         this.mapData = mapData;
     }
 
-    public void startBuild() {
-        Player player = new Player("Mehdi");
+    public void startBuild(Player player) {
 
-        creatRandomEnemies(2);
+        creatRandomEnemies(3);
         creatRandomDirts();
         creatRandEmptyRowsEnemies();
         creatRandEmptyColsEnemies();
@@ -87,6 +86,8 @@ public class MapBuilder {
                 gridPane.getChildren().remove(mapData.getBlocks().get(f).get(m - 2).getImageView());
             }
             if (i==0) {
+                gridPane.add(mapData.getEnemies().get(i + 2).getCurrentImageView(), m, f);
+            } else {
                 gridPane.add(mapData.getEnemies().get(i + 2).getCurrentImageView(), m, f);
             }
         }

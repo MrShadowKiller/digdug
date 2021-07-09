@@ -1,11 +1,13 @@
 package ir.ac.kntu.characters;
 
+import ir.ac.kntu.MapData;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-public abstract class Enemy implements Alive{
+public abstract class Enemy implements Alive {
     private double xSpeed;
 
     private double ySpeed;
@@ -75,9 +77,9 @@ public abstract class Enemy implements Alive{
     }
 
     @Override
-    public void move(int x, int y){
-        GridPane.setRowIndex(currentImageView,GridPane.getRowIndex(currentImageView) + y);
-        GridPane.setColumnIndex(currentImageView,GridPane.getColumnIndex(currentImageView) + x);
+    public void move(int x, int y, MapData mapData,GridPane gridPane) {
+        GridPane.setRowIndex(currentImageView, GridPane.getRowIndex(currentImageView) + y);
+        GridPane.setColumnIndex(currentImageView, GridPane.getColumnIndex(currentImageView) + x);
     }
 
     @Override

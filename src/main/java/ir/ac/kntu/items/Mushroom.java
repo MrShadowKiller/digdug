@@ -12,6 +12,7 @@ public class Mushroom extends Item{
 
     @Override
     public void doEffect(Player player) {
-        player.setxSpeed(player.getxSpeed()*1.5);
+        player.setxSpeed(player.getxSpeed()*2);
+        player.setySpeed(player.getySpeed()*2);
     }
 }

@@ -22,18 +22,18 @@ public class JavaFxApplication extends Application {
 
         GridPane gridPane = new GridPane();
 
-        MapData mapData = new MapData();
-        MapBuilder mapBuilder = new MapBuilder(gridPane,mapData);
-        mapBuilder.startBuild();
-
         gridPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
 
         gridPane.setMaxWidth(600);
         gridPane.setMaxHeight(500);
+
+
         root.setCenter(gridPane);
 
         Scene scene = new Scene(root, 600, 700, Color.rgb(240, 240, 240));
-
+        GameLogic gameLogic = new GameLogic(gridPane,scene,stage);
+        gameLogic.start();
 //        scene.setOnKeyPressed(e -> {
 //
 //

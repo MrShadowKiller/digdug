@@ -1,7 +1,7 @@
 package ir.ac.kntu.characters;
 
-import ir.ac.kntu.items.AirGun;
-import ir.ac.kntu.items.Weapon;
+import ir.ac.kntu.MapData;
+import ir.ac.kntu.items.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -9,14 +9,14 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-public class Player implements Alive{
+public class Player implements Alive {
     private String name = "ALEX";
 
     private int totalGames = 0;
 
-    private double xSpeed = 1;
+    private int xSpeed = 1;
 
-    private double ySpeed = 1;
+    private int ySpeed = 1;
 
     private int hp = 3;
 
@@ -26,17 +26,15 @@ public class Player implements Alive{
 
     private int playerHighScore = 0;
 
-    private ArrayList<ImageView> imageViews;
+    private ArrayList<Image> images;
 
     private ImageView currentImageView;
 
     public Player(String name) {
         this.name = name;
         weapon = new AirGun();
-//        applyImages();
-        currentImageView = new ImageView("assets\\player\\p1.png");
-        currentImageView.setFitHeight(40);
-        currentImageView.setFitWidth(40);
+        images = new ArrayList<>();
+        applyImages();
     }
 
     public String getName() {
@@ -55,19 +53,19 @@ public class Player implements Alive{
         this.totalGames = totalGames;
     }
 
-    public double getxSpeed() {
+    public int getxSpeed() {
         return xSpeed;
     }
 
-    public void setxSpeed(double xSpeed) {
+    public void setxSpeed(int xSpeed) {
         this.xSpeed = xSpeed;
     }
 
-    public double getySpeed() {
+    public int getySpeed() {
         return ySpeed;
     }
 
-    public void setySpeed(double ySpeed) {
+    public void setySpeed(int ySpeed) {
         this.ySpeed = ySpeed;
     }
 
@@ -107,24 +105,62 @@ public class Player implements Alive{
         return currentImageView;
     }
 
-    public void setCurrentImageView(ImageView currentImageView) {
-        this.currentImageView = currentImageView;
+    public void setCurrentImageView(int num) {
+        currentImageView.setImage(images.get(num-1));
     }
 
-    public void applyImages(){
-        for (int i = 1;i<=8;i++){
+    public void applyImages() {
+        for (int i = 1; i <= 8; i++) {
             Image image = new Image("assets\\player\\p" + i + ".png");
-            imageViews.add(new ImageView(image));
+
+            images.add(image);
+        }
+        currentImageView = new ImageView(images.get(0));
+        currentImageView.setFitHeight(40);
+        currentImageView.setFitWidth(40);
+    }
+
+    public boolean checkCollide(int row, int col, MapData mapData) {
+        System.out.println(row + " sss " + col);
+        if (!mapData.getBlocks().get(row).get(col).isUsed()) {
+            if (mapData.getBlocks().get(row).get(col) instanceof Dirt) {
+                collisionWithStone(row,col, mapData.getBlocks());
+                return false;
+            } else {
+
+                return true;
+            }
+        } else {
+            for (Enemy enemy : mapData.getEnemies()){
+                if (GridPane.getRowIndex(enemy.getCurrentImageView()) == row &&
+                        GridPane.getColumnIndex(enemy.getCurrentImageView()) == col){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void collisionWithStone(int row, int col, ArrayList<ArrayList<Block>>blocks){
+        if (row > 1 && blocks.get(row-1).get(col) instanceof Stone){
+            setCurrentImageView(8);
         }
 
-        currentImageView = imageViews.get(0);
     }
 
-
     @Override
-    public void move(int x, int y) {
-        GridPane.setRowIndex(currentImageView,GridPane.getRowIndex(currentImageView) + y);
-        GridPane.setColumnIndex(currentImageView,GridPane.getColumnIndex(currentImageView) + x);
+    public void move(int x, int y, MapData mapData,GridPane gridPane) {
+        int newRow = GridPane.getRowIndex(currentImageView) + y * ySpeed;
+        int newCol = GridPane.getColumnIndex(currentImageView) + x * xSpeed;
+
+        if (!checkCollide(newRow, newCol, mapData)) {
+            mapData.getBlocks().get(newRow).get(newCol).setUsed(true);
+            gridPane.getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
+
+            GridPane.setRowIndex(currentImageView, newRow);
+            GridPane.setColumnIndex(currentImageView, newCol);
+        }
+
     }
 
     @Override
