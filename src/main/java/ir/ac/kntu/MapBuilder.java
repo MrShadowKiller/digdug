@@ -138,9 +138,9 @@ public class MapBuilder {
     public void creatRandomEnemies(int ballons) {
         ArrayList<Enemy> enemies = mapData.getEnemies();
         for (int i = 0 ;i<ballons;i++){
-            mapData.getEnemies().add(new Balloon(1,2));
+            mapData.getEnemies().add(new Balloon(1,2,gridPane,mapData));
         }
-        mapData.getEnemies().add(new Dragon(1,3));
+        mapData.getEnemies().add(new Dragon(1,3,gridPane,mapData));
 
     }
 
