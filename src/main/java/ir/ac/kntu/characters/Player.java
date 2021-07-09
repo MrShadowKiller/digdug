@@ -137,8 +137,8 @@ public class Player implements Alive {
         int playerY = GridPane.getRowIndex(currentImageView);
         int col = playerX, row = playerY;
         System.out.println(row + " At first " + col);
-        while (col - playerX <= weapon.getHitRange() ||
-                row - playerY <= weapon.getHitRange()) {
+        while (col - playerX < weapon.getHitRange() &&
+                row - playerY < weapon.getHitRange()) {
 
             col += direction.getX();
             row += direction.getY();

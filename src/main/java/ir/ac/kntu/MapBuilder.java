@@ -7,6 +7,7 @@ import ir.ac.kntu.characters.Player;
 import ir.ac.kntu.items.Block;
 import ir.ac.kntu.items.Dirt;
 import ir.ac.kntu.items.Stone;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -38,9 +39,15 @@ public class MapBuilder {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 12; j++) {
                 dirts.get(i).add(new Dirt());
+                ImageView imageView = new ImageView("assets/black.png");
+                imageView.setFitHeight(50);
+                imageView.setFitWidth(50);
+                gridPane.add(imageView,j,i);
+
                 gridPane.add(dirts.get(i).get(j).getImageView(), j, i);
             }
         }
+
         mapData.setBlocks(dirts);
     }
 
