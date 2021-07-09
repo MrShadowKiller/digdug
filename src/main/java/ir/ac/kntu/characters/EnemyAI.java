@@ -23,52 +23,45 @@ public class EnemyAI implements Runnable {
 
     @Override
     public void run() {
-        Platform.runLater(this);
 
-        while (true) {
-            int playerX = GridPane.getColumnIndex(mapData.getCurrentPlayer().getCurrentImageView());
-            int playerY = GridPane.getRowIndex(mapData.getCurrentPlayer().getCurrentImageView());
-            int enemyX = GridPane.getColumnIndex(enemy.getCurrentImageView());
-            int enemyY = GridPane.getRowIndex(enemy.getCurrentImageView());
+        int playerX = GridPane.getColumnIndex(mapData.getCurrentPlayer().getCurrentImageView());
+        int playerY = GridPane.getRowIndex(mapData.getCurrentPlayer().getCurrentImageView());
+        int enemyX = GridPane.getColumnIndex(enemy.getCurrentImageView());
+        int enemyY = GridPane.getRowIndex(enemy.getCurrentImageView());
 
-            Way[][] pred = new Way[10][12];
-            if (findWayToPlayer(enemyY, enemyX, playerY, playerX, pred)) {
+        Way[][] pred = new Way[10][12];
+        if (findWayToPlayer(enemyY, enemyX, playerY, playerX, pred)) {
 
-                LinkedList<Way> path = new LinkedList<>();
 
-                int crawlY = playerY;
-                int crawlX = playerX;
+            LinkedList<Way> path = new LinkedList<>();
 
-                path.add(new Way(crawlY, crawlX));
-                while (pred[crawlY][crawlX] != null) {
-                    path.add(pred[crawlY][crawlX]);
-                    crawlX = pred[crawlY][crawlX].getCol();
+            int crawlY = playerY;
+            int crawlX = playerX;
+
+            path.add(new Way(crawlY, crawlX));
+            while (pred[crawlY][crawlX] != null) {
+                path.add(pred[crawlY][crawlX]);
+                crawlX = pred[crawlY][crawlX].getCol();
+                try {
                     crawlY = pred[crawlY][crawlX].getRow();
-                }
-                while (path.size() == 0) {
-                    Way currentWay = path.removeLast();
-                    GridPane.setRowIndex(enemy.getCurrentImageView(), currentWay.getRow());
-                    GridPane.setColumnIndex(enemy.getCurrentImageView(), currentWay.getCol());
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    if (playerX != GridPane.getColumnIndex(mapData.getCurrentPlayer().getCurrentImageView()) ||
-                            playerY != GridPane.getRowIndex(mapData.getCurrentPlayer().getCurrentImageView())) {
-                        break;
-                    }
-                }
 
+                } catch (NullPointerException e) {
+                    System.out.println("Eror ! " + crawlX + " cralw x  Crawl Y : " );
+                }
             }
 
+                Way currentWay = path.removeLast();
+                GridPane.setRowIndex(enemy.getCurrentImageView(), currentWay.getRow());
+                GridPane.setColumnIndex(enemy.getCurrentImageView(), currentWay.getCol());
+
         }
+
+
     }
 
     public boolean findWayToPlayer(int enemyY, int enemyX, int playerY, int playerX, Way[][] pred) {
         LinkedList<Way> lineup = new LinkedList<Way>();
         boolean[][] visited = new boolean[10][12];
-
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 12; j++) {
                 visited[i][j] = false;
@@ -86,7 +79,7 @@ public class EnemyAI implements Runnable {
             Way currentWay = lineup.remove();
             ArrayList<Way> ways = makeSquareWays(currentWay);
             for (int i = 0; i < ways.size(); i++) {
-                if (!checkCollide(ways.get(i).getRow(),ways.get(i).getCol())) {
+                if (!checkCollide(ways.get(i).getRow(), ways.get(i).getCol())) {
                     if (!visited[ways.get(i).getRow()][ways.get(i).getCol()]) {
                         visited[ways.get(i).getRow()][ways.get(i).getCol()] = true;
                         pred[ways.get(i).getRow()][ways.get(i).getCol()] = currentWay;
@@ -99,6 +92,7 @@ public class EnemyAI implements Runnable {
                 }
             }
         }
+        System.out.println("test");
         return false;
     }
 
@@ -123,15 +117,13 @@ public class EnemyAI implements Runnable {
     public boolean checkCollide(int row, int col) {
         if (!mapData.getBlocks().get(row).get(col).isUsed()) {
             if (mapData.getBlocks().get(row).get(col) instanceof Dirt) {
-                return false;
-            } else {
-                System.out.println("Collided STONE!");
                 return true;
+            } else {
+                return false;
             }
         }
         return false;
     }
-
 
 
     public void moveUp() {
