@@ -73,6 +73,14 @@ public abstract class Enemy implements Alive {
         return hp > 0;
     }
 
+    public int getRow(){
+        return GridPane.getRowIndex(currentImageView);
+    }
+
+    public int getCol(){
+        return GridPane.getColumnIndex(currentImageView);
+    }
+
     public double getxSpeed() {
         return xSpeed;
     }

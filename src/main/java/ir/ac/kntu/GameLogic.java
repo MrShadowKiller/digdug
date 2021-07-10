@@ -26,7 +26,7 @@ public class GameLogic {
         this.gridPane = gridPane;
         this.scene = scene;
         this.stage = stage;
-        mapData = new MapData();
+        mapData = new MapData(gridPane);
         mapBuilder = new MapBuilder(gridPane, mapData);
     }
 

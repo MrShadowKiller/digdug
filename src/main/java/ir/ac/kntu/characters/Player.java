@@ -55,7 +55,6 @@ public class Player implements Alive {
     public boolean checkCollide(int row, int col) {
         if (!mapData.getBlocks().get(row).get(col).isUsed()) {
             if (mapData.getBlocks().get(row).get(col) instanceof Dirt) {
-                collisionWithStone(row, col);
                 return false;
             } else {
                 System.out.println("Collided STONE!");
@@ -79,6 +78,7 @@ public class Player implements Alive {
 
     public void collisionWithStone(int row, int col) {
         if (row > 1 && mapData.getBlocks().get(row - 1).get(col) instanceof Stone) {
+            ((Stone)mapData.getBlocks().get(row - 1).get(col)).fallStone();
             setCurrentImageView(8);
         } else {
             setCurrentImageView(4);
@@ -94,9 +94,9 @@ public class Player implements Alive {
                 System.out.println("Player Location : " + newRow + " " + newCol);
                 mapData.getBlocks().get(newRow).get(newCol).setUsed(true);
                 gridPane.getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
-
                 GridPane.setRowIndex(currentImageView, newRow);
                 GridPane.setColumnIndex(currentImageView, newCol);
+                collisionWithStone(newRow, newCol);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Out Of Map!");
@@ -112,7 +112,7 @@ public class Player implements Alive {
 
     @Override
     public void getHit(int damage) {
-
+        hp -= damage;
     }
 
     @Override
@@ -188,6 +188,14 @@ public class Player implements Alive {
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.3));
         pauseTransition.setOnFinished(e -> gridPane.getChildren().remove(attackImageView));
         pauseTransition.play();
+    }
+
+    public int getRow(){
+        return GridPane.getRowIndex(currentImageView);
+    }
+
+    public int getCol(){
+        return GridPane.getColumnIndex(currentImageView);
     }
 
 

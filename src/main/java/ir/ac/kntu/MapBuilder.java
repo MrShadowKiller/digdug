@@ -63,7 +63,7 @@ public class MapBuilder {
                 continue;
             }
             gridPane.getChildren().remove(blocks.get(f).get(m).getImageView());
-            blocks.get(f).set(m, new Stone());
+            blocks.get(f).set(m, new Stone(mapData));
             gridPane.add(blocks.get(f).get(m).getImageView(), m, f);
         }
     }

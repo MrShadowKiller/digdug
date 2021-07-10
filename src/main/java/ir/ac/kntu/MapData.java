@@ -5,6 +5,7 @@ import ir.ac.kntu.characters.Player;
 import ir.ac.kntu.items.Block;
 import ir.ac.kntu.items.Dirt;
 import ir.ac.kntu.items.Item;
+import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +21,9 @@ public class MapData {
 
     private ArrayList<Enemy> enemies;
 
-    HashMap<Integer,Integer> emptyBlocks;
+    private GridPane gridPane;
 
-
-    public MapData() {
+    public MapData(GridPane gridPane) {
         items = new ArrayList<>();
         blocks = new ArrayList<>();
         for (int i = 0;i<10;i++){
@@ -31,7 +31,7 @@ public class MapData {
         }
         players = new ArrayList<>();
         enemies = new ArrayList<>();
-        emptyBlocks = new HashMap<>();
+        this.gridPane = gridPane;
     }
 
     public ArrayList<Item> getItems() {
@@ -72,5 +72,9 @@ public class MapData {
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
     }
 }
