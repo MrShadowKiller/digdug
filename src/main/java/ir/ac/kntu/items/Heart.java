@@ -4,7 +4,9 @@ import ir.ac.kntu.characters.Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Heart extends Item{
+import java.io.Serializable;
+
+public class Heart extends Item implements Serializable {
 
     public Heart() {
         super(new ImageView(new Image("assets/heart.png")));
@@ -12,6 +14,6 @@ public class Heart extends Item{
 
     @Override
     public void doEffect(Player player) {
-        player.setHp(player.getHp()+1);
+        player.setHp(player.getHp() + 1);
     }
 }

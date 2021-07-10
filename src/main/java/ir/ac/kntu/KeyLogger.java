@@ -2,19 +2,39 @@ package ir.ac.kntu;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+
 import static ir.ac.kntu.characters.Direction.*;
 import static ir.ac.kntu.characters.Direction.LEFT;
 
 public class KeyLogger implements EventHandler<KeyEvent> {
-    private MapData mapData;
+    private final MapData mapData;
+
+    private Thread delayKey;
+
+    private final Runnable runDelay;
+
+    private int speed = 250;
 
     public KeyLogger(MapData mapData) {
         this.mapData = mapData;
+        runDelay = () -> {
+            try {
+                Thread.sleep(speed);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
+
     }
 
     @Override
     public void handle(KeyEvent keyEvent) {
-        if (!mapData.getCurrentPlayer().isAlive()){
+        speed /= mapData.getCurrentPlayer().getxSpeed();
+
+        if (!mapData.getCurrentPlayer().isAlive()) {
+            return;
+        }
+        if (delayKey != null && delayKey.isAlive()) {
             return;
         }
 
@@ -39,5 +59,7 @@ public class KeyLogger implements EventHandler<KeyEvent> {
                 mapData.getCurrentPlayer().attack();
                 break;
         }
+        delayKey = new Thread(runDelay);
+        delayKey.start();
     }
 }

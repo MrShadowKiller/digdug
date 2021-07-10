@@ -6,11 +6,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Enemy implements Alive {
-    private MapData mapData;
-    private GridPane gridPane;
+public abstract class Enemy implements Alive, Serializable {
+    private final MapData mapData;
+    private final GridPane gridPane;
 
     private double xSpeed;
 
@@ -18,7 +19,7 @@ public abstract class Enemy implements Alive {
 
     private int hp;
 
-    private int point;
+    private final int point;
 
     private boolean isActive = true;
 
@@ -26,14 +27,12 @@ public abstract class Enemy implements Alive {
 
     private ImageView currentImageView;
 
-    private EnemyAI enemyAI;
+    private final EnemyAI enemyAI;
 
     private Thread enemyThread;
 
 
-
-
-    public Enemy(double xSpeed, double ySpeed, int hp,int point, GridPane gridPane, MapData mapData) {
+    public Enemy(double xSpeed, double ySpeed, int hp, int point, GridPane gridPane, MapData mapData) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.hp = hp;
@@ -50,7 +49,7 @@ public abstract class Enemy implements Alive {
         enemyThread = new Thread(() -> {
             while (isActive) {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -64,8 +63,8 @@ public abstract class Enemy implements Alive {
         isActive = false;
     }
 
-    public boolean collisionWithPlayer(int col,int row){
-        if (mapData.getCurrentPlayer().getCol() == col && mapData.getCurrentPlayer().getRow() == row){
+    public boolean collisionWithPlayer(int col, int row) {
+        if (mapData.getCurrentPlayer().getCol() == col && mapData.getCurrentPlayer().getRow() == row) {
             mapData.getCurrentPlayer().getHit(1);
             return true;
         }
@@ -74,7 +73,7 @@ public abstract class Enemy implements Alive {
 
     @Override
     public void move(int col, int row) {
-        collisionWithPlayer(col,row);
+        collisionWithPlayer(col, row);
         GridPane.setRowIndex(currentImageView, row);
         GridPane.setColumnIndex(currentImageView, col);
     }
@@ -84,11 +83,11 @@ public abstract class Enemy implements Alive {
         return hp > 0;
     }
 
-    public int getRow(){
+    public int getRow() {
         return GridPane.getRowIndex(currentImageView);
     }
 
-    public int getCol(){
+    public int getCol() {
         return GridPane.getColumnIndex(currentImageView);
     }
 

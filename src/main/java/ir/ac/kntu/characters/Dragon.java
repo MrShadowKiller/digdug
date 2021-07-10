@@ -7,9 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Dragon extends Enemy {
+
+public class Dragon extends Enemy implements Serializable {
     private ImageView fireAttack;
 
     public Dragon(double speed, int hp, GridPane gridPane, MapData mapData) {
@@ -53,15 +54,27 @@ public class Dragon extends Enemy {
 
     @Override
     public void move(int col, int row) {
-        if (collisionWithPlayer(col, row)) {
-            getGridPane().add(fireAttack, getMapData().getCurrentPlayer().getCol(), getMapData().getCurrentPlayer().getRow());
-            attackAnimation();
+        try {
+            if (collisionWithPlayer(col, row)) {
+                for (Enemy enemy : getMapData().getEnemies()) {
+                    if (enemy != this) {
+                        if (enemy.getRow() == row && enemy.getCol() == col) {
+                            return;
+                        }
+                    }
+                }
+                getGridPane().add(fireAttack, getMapData().getCurrentPlayer().getCol(), getMapData().getCurrentPlayer().getRow());
+                attackAnimation();
 
-        } else {
-            GridPane.setRowIndex(getCurrentImageView(), row);
-            GridPane.setColumnIndex(getCurrentImageView(), col);
+            } else {
+                GridPane.setRowIndex(getCurrentImageView(), row);
+                GridPane.setColumnIndex(getCurrentImageView(), col);
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("DRAGON MAY NOT WORK WELL");
         }
     }
+
 
     public void attackAnimation() {
         PauseTransition pause = new PauseTransition(Duration.seconds(1));

@@ -1,9 +1,11 @@
 package ir.ac.kntu.items;
 
-public abstract class Weapon {
-    private int hitRange;
+import java.io.Serializable;
 
-    private int damage;
+public abstract class Weapon implements Serializable {
+    private final int hitRange;
+
+    private final int damage;
 
     public Weapon(int hitRange, int damage) {
         this.hitRange = hitRange;

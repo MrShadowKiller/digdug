@@ -3,7 +3,9 @@ package ir.ac.kntu.items;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-public abstract class Block {
+import java.io.Serializable;
+
+public abstract class Block implements Serializable {
     private ImageView imageView;
 
     private boolean isUsed = false;
@@ -30,11 +32,11 @@ public abstract class Block {
         this.imageView = imageView;
     }
 
-    public int getRow(){
+    public int getRow() {
         return GridPane.getRowIndex(getImageView());
     }
 
-    public int getCol(){
+    public int getCol() {
         return GridPane.getColumnIndex(getImageView());
     }
 

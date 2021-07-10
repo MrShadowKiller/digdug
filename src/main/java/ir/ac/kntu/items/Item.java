@@ -4,8 +4,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public abstract class Item implements ItemEffect {
-    private ImageView imageView;
+import java.io.Serializable;
+
+public abstract class Item implements ItemEffect, Serializable {
+    private final ImageView imageView;
 
     public Item(ImageView imageView) {
         this.imageView = imageView;
@@ -15,11 +17,11 @@ public abstract class Item implements ItemEffect {
         return imageView;
     }
 
-    public int getRow(){
+    public int getRow() {
         return GridPane.getRowIndex(getImageView());
     }
 
-    public int getCol(){
+    public int getCol() {
         return GridPane.getColumnIndex(getImageView());
     }
 }

@@ -4,7 +4,9 @@ import ir.ac.kntu.characters.Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Gun extends Item{
+import java.io.Serializable;
+
+public class Gun extends Item implements Serializable {
 
     public Gun() {
         super(new ImageView(new Image("assets/gun.png")));

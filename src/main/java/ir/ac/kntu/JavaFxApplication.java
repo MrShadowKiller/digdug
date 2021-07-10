@@ -30,7 +30,7 @@ public class JavaFxApplication extends Application {
 
 
         Scene scene = new Scene(root, 600, 700, Color.rgb(240, 240, 240));
-        Menu menu = new Menu(stage,scene,root);
+        Menu menu = new Menu(stage, scene, root);
         menu.startMenu();
 
 //        scene.setOnKeyPressed(e -> {

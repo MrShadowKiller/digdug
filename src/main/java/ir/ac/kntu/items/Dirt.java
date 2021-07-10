@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class Dirt extends Block{
+import java.io.Serializable;
+
+public class Dirt extends Block implements Serializable {
 
     public Dirt() {
         super(new ImageView("assets/dirt.png"));

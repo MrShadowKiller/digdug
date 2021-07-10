@@ -1,9 +1,11 @@
 package ir.ac.kntu.characters;
 
-public class Way {
-    private int row;
+import java.io.Serializable;
 
-    private int col;
+public class Way implements Serializable {
+    private final int row;
+
+    private final int col;
 
     public Way(int row, int col) {
         this.row = row;

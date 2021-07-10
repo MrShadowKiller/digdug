@@ -8,10 +8,11 @@ import ir.ac.kntu.items.Heart;
 import ir.ac.kntu.items.Item;
 import javafx.scene.layout.GridPane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MapData {
+public class MapData implements Serializable {
     private Item item;
 
     private ArrayList<ArrayList<Block>> blocks;
@@ -22,11 +23,13 @@ public class MapData {
 
     private ArrayList<Enemy> enemies;
 
-    private GridPane gridPane;
+    private final GridPane gridPane;
+
+    private boolean gameFinished = false;
 
     public MapData(GridPane gridPane) {
         blocks = new ArrayList<>();
-        for (int i = 0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             blocks.add(new ArrayList<>());
         }
         players = new ArrayList<>();
@@ -76,5 +79,13 @@ public class MapData {
 
     public GridPane getGridPane() {
         return gridPane;
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
+    }
+
+    public void setGameFinished(boolean gameFinished) {
+        this.gameFinished = gameFinished;
     }
 }

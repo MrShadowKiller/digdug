@@ -8,11 +8,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Balloon extends Enemy {
+public class Balloon extends Enemy implements Serializable {
     public Balloon(double speed, int hp, GridPane gridPane, MapData mapData) {
-        super(speed, speed, hp,5, gridPane, mapData);
+        super(speed, speed, hp, 5, gridPane, mapData);
         applyImages();
     }
 

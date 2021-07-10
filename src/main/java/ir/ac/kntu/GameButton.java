@@ -5,13 +5,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class GameButton {
-    private Image normal;
+    private final Image normal;
 
-    private Image hold;
+    private final Image hold;
 
     private ImageView currentImageView;
 
-    public GameButton(Image normal,Image hold) {
+    public GameButton(Image normal, Image hold) {
         this.normal = normal;
         this.hold = hold;
         currentImageView = new ImageView(normal);
@@ -28,7 +28,6 @@ public class GameButton {
     public ImageView getCurrentImageView() {
         return currentImageView;
     }
-
 
 
     public void setImageView(ImageView imageView) {

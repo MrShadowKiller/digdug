@@ -10,10 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player implements Alive {
-    private MapData mapData;
+public class Player implements Alive, Serializable {
+    private final MapData mapData;
 
     private String name = "ALEX";
     private int totalGames = 0;
@@ -25,7 +26,7 @@ public class Player implements Alive {
     private boolean isShooting = false;
     private int playerScore = 0;
     private int playerHighScore = 0;
-    private ArrayList<Image> images;
+    private final ArrayList<Image> images;
     private ImageView currentImageView;
     private ImageView attackImageView;
 
@@ -76,8 +77,8 @@ public class Player implements Alive {
     public void collisionWithStone(int row, int col) {
 
         if (row > 1 && mapData.getBlocks().get(row - 1).get(col) instanceof Stone) {
-            if (!mapData.getBlocks().get(row - 1).get(col).isUsed()){
-                ((Stone)mapData.getBlocks().get(row - 1).get(col)).fallStone();
+            if (!mapData.getBlocks().get(row - 1).get(col).isUsed()) {
+                ((Stone) mapData.getBlocks().get(row - 1).get(col)).fallStone();
                 setCurrentImageView(8);
             } else {
                 setCurrentImageView(4);
@@ -89,8 +90,8 @@ public class Player implements Alive {
 
     @Override
     public void move(int x, int y) {
-        int newRow = getRow() + y * ySpeed;
-        int newCol = getCol() + x * xSpeed;
+        int newRow = getRow() + y;
+        int newCol = getCol() + x;
         try {
             if (!checkCollide(newRow, newCol)) {
                 System.out.println("Player Location : " + newRow + " " + newCol);
@@ -128,8 +129,9 @@ public class Player implements Alive {
         System.out.println("Player got hit!\nCurrent HP : " + hp);
 
         hp -= damage;
-        if (!isAlive()){
+        if (!isAlive()) {
             deadAnimation();
+
         }
     }
 
@@ -203,7 +205,7 @@ public class Player implements Alive {
                 if (enemy.getRow() == row && enemy.getCol() == col) {
                     enemy.getHit(weapon.getDamage());
                     System.out.println("Enemy got hit at : " + row + " " + col);
-                    if (!enemy.isAlive()){
+                    if (!enemy.isAlive()) {
                         playerScore += enemy.getPoint();
                     }
                 }
@@ -211,17 +213,17 @@ public class Player implements Alive {
         }
     }
 
-    public void attackAnimation(){
+    public void attackAnimation() {
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.3));
         pauseTransition.setOnFinished(e -> mapData.getGridPane().getChildren().remove(attackImageView));
         pauseTransition.play();
     }
 
-    public int getRow(){
+    public int getRow() {
         return GridPane.getRowIndex(currentImageView);
     }
 
-    public int getCol(){
+    public int getCol() {
         return GridPane.getColumnIndex(currentImageView);
     }
 

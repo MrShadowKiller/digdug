@@ -1,6 +1,8 @@
 package ir.ac.kntu.items;
 
-public class SniperGun extends Weapon{
+import java.io.Serializable;
+
+public class SniperGun extends Weapon implements Serializable {
     public SniperGun() {
         super(5, 1);
     }

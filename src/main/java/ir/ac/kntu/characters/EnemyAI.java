@@ -6,14 +6,15 @@ import ir.ac.kntu.items.Stone;
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class EnemyAI implements Runnable {
-    private Enemy enemy;
-    private GridPane gridPane;
-    private MapData mapData;
+public class EnemyAI implements Runnable , Serializable {
+    private final Enemy enemy;
+    private final GridPane gridPane;
+    private final MapData mapData;
 
     public EnemyAI(Enemy enemy, GridPane gridPane, MapData mapData) {
         this.enemy = enemy;
@@ -46,10 +47,10 @@ public class EnemyAI implements Runnable {
 
             path.removeLast();
             Way currentWay = path.removeLast();
-            if (!enemy.isAlive()){
+            if (!enemy.isAlive()) {
                 return;
             }
-            System.out.println("Enemy on Way : " + currentWay.getRow() +  currentWay.getCol());
+            System.out.println("Enemy on Way : " + currentWay.getRow() + currentWay.getCol());
             enemy.move(currentWay.getCol(), currentWay.getRow());
         }
     }
@@ -109,10 +110,7 @@ public class EnemyAI implements Runnable {
     }
 
     public boolean checkCollide(int row, int col) {
-        if (!mapData.getBlocks().get(row).get(col).isUsed()) {
-            return true;
-        }
-        return false;
+        return !mapData.getBlocks().get(row).get(col).isUsed();
     }
 
 }

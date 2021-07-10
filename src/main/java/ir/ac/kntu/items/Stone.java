@@ -6,8 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-public class Stone extends Block {
-    private MapData mapData;
+import java.io.Serializable;
+
+public class Stone extends Block implements Serializable {
+    private final MapData mapData;
 
     public Stone(MapData mapData) {
         super(new ImageView("assets/gravel.png"));
@@ -19,14 +21,14 @@ public class Stone extends Block {
         int stoneX = GridPane.getColumnIndex(getImageView());
 
         for (int i = stoneY + 1; i < 10; i++) {
-            if (!mapData.getBlocks().get(i).get(stoneX).isUsed()){
+            if (!mapData.getBlocks().get(i).get(stoneX).isUsed()) {
                 break;
             }
-            if (mapData.getCurrentPlayer().getRow() == i && mapData.getCurrentPlayer().getCol() == stoneX ){
+            if (mapData.getCurrentPlayer().getRow() == i && mapData.getCurrentPlayer().getCol() == stoneX) {
                 mapData.getCurrentPlayer().getHit(1);
             }
-            for (Enemy enemy : mapData.getEnemies()){
-                if (enemy.getRow() == i  && enemy.getCol() == stoneX){
+            for (Enemy enemy : mapData.getEnemies()) {
+                if (enemy.getRow() == i && enemy.getCol() == stoneX) {
                     enemy.getHit(1);
                 }
             }

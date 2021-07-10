@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 
 public class RandomItem implements Runnable {
-    private MapData mapData;
+    private final MapData mapData;
 
     public RandomItem(MapData mapData) {
         this.mapData = mapData;
