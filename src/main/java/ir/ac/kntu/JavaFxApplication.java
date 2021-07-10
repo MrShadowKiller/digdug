@@ -18,22 +18,21 @@ public class JavaFxApplication extends Application {
     public void start(Stage stage) throws Exception {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-border-width: 0 0 5 0;");
-        Dirt dirt = new Dirt();
 
         GridPane gridPane = new GridPane();
 
         gridPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-
-
         gridPane.setMaxWidth(600);
         gridPane.setMaxHeight(500);
 
 
-        root.setCenter(gridPane);
+//        root.setCenter(gridPane);
+
 
         Scene scene = new Scene(root, 600, 700, Color.rgb(240, 240, 240));
-        GameLogic gameLogic = new GameLogic(gridPane,scene,stage);
-        gameLogic.start();
+        Menu menu = new Menu(stage,scene,root);
+        menu.startMenu();
+
 //        scene.setOnKeyPressed(e -> {
 //
 //
@@ -45,7 +44,7 @@ public class JavaFxApplication extends Application {
 //        }
         // Setting stage properties
         stage.initStyle(StageStyle.UTILITY);
-        stage.setTitle("DigDig");
+        stage.setTitle("DigDug");
 
         stage.setScene(scene);
         stage.show();

@@ -5,8 +5,12 @@ import ir.ac.kntu.characters.Enemy;
 import ir.ac.kntu.characters.Player;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
@@ -55,5 +59,37 @@ public class GameLogic {
             }
         });
         threadRandom.start();
+
+        Thread mainThread = new Thread(()->{
+            Runnable runnable = () -> {
+                if (!mapData.getCurrentPlayer().isAlive()) {
+                    gameLost();
+                }
+            };
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(runnable);
+            }
+        });
+        mainThread.start();
+    }
+
+    public void gameLost(){
+        Pane pane = new Pane();
+        Label label = new Label("WASTED");
+        label.setTextFill(Color.WHITE);
+        label.setFont(new Font("Cambria",13));
+        BackgroundImage myBI= new BackgroundImage(new Image("assets/playerSignUp.png",600,800,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        pane.setBackground(new Background(myBI));
+
+        scene.setRoot(pane);
+
     }
 }

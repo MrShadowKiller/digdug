@@ -14,6 +14,10 @@ public class KeyLogger implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(KeyEvent keyEvent) {
+        if (!mapData.getCurrentPlayer().isAlive()){
+            return;
+        }
+
         switch (keyEvent.getCode()) {
             case W:
                 mapData.getCurrentPlayer().move(0, -1);

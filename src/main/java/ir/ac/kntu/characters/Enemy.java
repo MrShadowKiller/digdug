@@ -50,7 +50,7 @@ public abstract class Enemy implements Alive {
         enemyThread = new Thread(() -> {
             while (isActive) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
