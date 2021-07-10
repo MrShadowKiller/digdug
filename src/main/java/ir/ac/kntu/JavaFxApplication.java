@@ -1,6 +1,6 @@
 package ir.ac.kntu;
 
-import ir.ac.kntu.items.Dirt;
+import ir.ac.kntu.logic.Menu;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,7 +15,7 @@ public class JavaFxApplication extends Application {
         launch(args);
     }
 
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage)  {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-border-width: 0 0 5 0;");
 
@@ -26,23 +26,11 @@ public class JavaFxApplication extends Application {
         gridPane.setMaxHeight(500);
 
 
-//        root.setCenter(gridPane);
-
-
         Scene scene = new Scene(root, 600, 700, Color.rgb(240, 240, 240));
         Menu menu = new Menu(stage, scene, root);
         menu.startMenu();
 
-//        scene.setOnKeyPressed(e -> {
-//
-//
-//        });
 
-//        for (Node node : gridPane.getChildren()){
-//            GridPane.setHgrow(node,Priority.ALWAYS);
-//            GridPane.setHgrow(node,Priority.ALWAYS);
-//        }
-        // Setting stage properties
         stage.initStyle(StageStyle.UTILITY);
         stage.setTitle("DigDug");
 

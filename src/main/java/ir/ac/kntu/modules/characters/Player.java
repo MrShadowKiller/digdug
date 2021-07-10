@@ -1,12 +1,11 @@
-package ir.ac.kntu.characters;
+package ir.ac.kntu.modules.characters;
 
-import ir.ac.kntu.MapData;
-import ir.ac.kntu.items.*;
+import ir.ac.kntu.logic.MapData;
+import ir.ac.kntu.modules.items.*;
 import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 public class Player implements Alive, Serializable {
     private final MapData mapData;
 
-    private String name = "ALEX";
+    private String name;
     private int totalGames = 0;
     private int xSpeed = 1;
     private int ySpeed = 1;
@@ -176,6 +175,8 @@ public class Player implements Alive, Serializable {
                 attackImageView.setRotationAxis(Rotate.Y_AXIS);
                 currentImageView.setRotate(180);
                 attackImageView.setRotate(180);
+                break;
+            default:
                 break;
         }
     }

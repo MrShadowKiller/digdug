@@ -1,16 +1,13 @@
-package ir.ac.kntu;
+package ir.ac.kntu.logic;
 
-import ir.ac.kntu.characters.Enemy;
-import ir.ac.kntu.characters.Player;
-import ir.ac.kntu.items.Block;
-import ir.ac.kntu.items.Dirt;
-import ir.ac.kntu.items.Heart;
-import ir.ac.kntu.items.Item;
+import ir.ac.kntu.modules.characters.Enemy;
+import ir.ac.kntu.modules.characters.Player;
+import ir.ac.kntu.modules.items.Block;
+import ir.ac.kntu.modules.items.Item;
 import javafx.scene.layout.GridPane;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MapData implements Serializable {
     private Item item;

@@ -1,4 +1,4 @@
-package ir.ac.kntu.characters;
+package ir.ac.kntu.modules.characters;
 
 import java.io.Serializable;
 

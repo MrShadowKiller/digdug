@@ -1,24 +1,19 @@
-package ir.ac.kntu.characters;
+package ir.ac.kntu.modules.characters;
 
-import ir.ac.kntu.MapData;
-import ir.ac.kntu.items.Dirt;
-import ir.ac.kntu.items.Stone;
-import javafx.application.Platform;
+import ir.ac.kntu.logic.MapData;
 import javafx.scene.layout.GridPane;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
-public class EnemyAI implements Runnable , Serializable {
+public class EnemyAI implements Runnable, Serializable {
     private final Enemy enemy;
-    private final GridPane gridPane;
     private final MapData mapData;
+    private Way[][] pred;
 
     public EnemyAI(Enemy enemy, GridPane gridPane, MapData mapData) {
         this.enemy = enemy;
-        this.gridPane = gridPane;
         this.mapData = mapData;
     }
 
@@ -29,13 +24,13 @@ public class EnemyAI implements Runnable , Serializable {
         int enemyX = enemy.getCol();
         int enemyY = enemy.getRow();
 
-        Way[][] pred = new Way[10][12];
-        if (findWayToPlayer(enemyY, enemyX, playerY, playerX, pred)) {
+        pred = new Way[10][12];
+        if (findWayToPlayer(enemyY, enemyX, playerY, playerX)) {
             LinkedList<Way> path = new LinkedList<>();
 
             int crawlY = playerY;
             int crawlX = playerX;
-            int temp = 0;
+            int temp;
             path.add(new Way(crawlY, crawlX));
 
             while (pred[crawlY][crawlX] != null) {
@@ -55,8 +50,8 @@ public class EnemyAI implements Runnable , Serializable {
         }
     }
 
-    public boolean findWayToPlayer(int enemyY, int enemyX, int playerY, int playerX, Way[][] pred) {
-        LinkedList<Way> lineup = new LinkedList<Way>();
+    public boolean findWayToPlayer(int enemyY, int enemyX, int playerY, int playerX) {
+        LinkedList<Way> lineup = new LinkedList<>();
         boolean[][] visited = new boolean[10][12];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 12; j++) {
@@ -74,14 +69,14 @@ public class EnemyAI implements Runnable , Serializable {
         while (!lineup.isEmpty()) {
             Way currentWay = lineup.remove();
             ArrayList<Way> ways = makeSquareWays(currentWay);
-            for (int i = 0; i < ways.size(); i++) {
-                if (!checkCollide(ways.get(i).getRow(), ways.get(i).getCol())) {
-                    if (!visited[ways.get(i).getRow()][ways.get(i).getCol()]) {
-                        visited[ways.get(i).getRow()][ways.get(i).getCol()] = true;
-                        pred[ways.get(i).getRow()][ways.get(i).getCol()] = currentWay;
-                        lineup.add(ways.get(i));
+            for (Way way : ways) {
+                if (!checkCollide(way.getRow(), way.getCol())) {
+                    if (!visited[way.getRow()][way.getCol()]) {
+                        visited[way.getRow()][way.getCol()] = true;
+                        pred[way.getRow()][way.getCol()] = currentWay;
+                        lineup.add(way);
 
-                        if (ways.get(i).getRow() == playerY && ways.get(i).getCol() == playerX) {
+                        if (way.getRow() == playerY && way.getCol() == playerX) {
                             return true;
                         }
                     }

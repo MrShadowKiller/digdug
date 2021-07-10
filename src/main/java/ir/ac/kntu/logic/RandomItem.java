@@ -1,10 +1,7 @@
-package ir.ac.kntu;
+package ir.ac.kntu.logic;
 
-import ir.ac.kntu.characters.Enemy;
-import ir.ac.kntu.items.*;
-import javafx.application.Platform;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import ir.ac.kntu.modules.characters.Enemy;
+import ir.ac.kntu.modules.items.*;
 
 import java.util.ArrayList;
 
@@ -28,6 +25,8 @@ public class RandomItem implements Runnable {
                 break;
             case 2:
                 item = new Gun();
+                break;
+            default:
                 break;
         }
         ArrayList<Block> emptyBlocks = findEmptyBlocks();

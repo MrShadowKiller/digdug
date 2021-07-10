@@ -1,4 +1,4 @@
-package ir.ac.kntu.items;
+package ir.ac.kntu.modules.items;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;

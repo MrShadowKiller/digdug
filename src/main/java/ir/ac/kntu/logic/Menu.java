@@ -1,6 +1,7 @@
-package ir.ac.kntu;
+package ir.ac.kntu.logic;
 
-import ir.ac.kntu.characters.Player;
+import ir.ac.kntu.GameButton;
+import ir.ac.kntu.modules.characters.Player;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -112,13 +113,13 @@ public class Menu {
 
         GridPane gridPane = new GridPane();
         mapData = new MapData(gridPane);
-
+        gridPane.setMinSize(600, 500);
+        gridPane.setMaxSize(600, 500);
         gridPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        gridPane.setMaxWidth(600);
-        gridPane.setMaxHeight(500);
+
         root.setCenter(gridPane);
         scene.setRoot(root);
-        GameLogic gameLogic = new GameLogic(gridPane, scene, stage, mapData);
+        GameLogic gameLogic = new GameLogic(root, scene, stage, mapData);
         gameLogic.start();
         gameFinished();
     }

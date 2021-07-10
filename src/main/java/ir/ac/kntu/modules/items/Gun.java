@@ -1,6 +1,6 @@
-package ir.ac.kntu.items;
+package ir.ac.kntu.modules.items;
 
-import ir.ac.kntu.characters.Player;
+import ir.ac.kntu.modules.characters.Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

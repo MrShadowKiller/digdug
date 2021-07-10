@@ -1,15 +1,13 @@
-package ir.ac.kntu.characters;
+package ir.ac.kntu.modules.characters;
 
-import ir.ac.kntu.MapData;
+import ir.ac.kntu.logic.MapData;
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Balloon extends Enemy implements Serializable {
     public Balloon(double speed, int hp, GridPane gridPane, MapData mapData) {

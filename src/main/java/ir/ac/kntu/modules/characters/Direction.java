@@ -1,4 +1,4 @@
-package ir.ac.kntu.characters;
+package ir.ac.kntu.modules.characters;
 
 public enum Direction {
     UP(0, -1), DOWN(0, 1), RIGHT(1, 0), LEFT(-1, 0);

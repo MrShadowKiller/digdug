@@ -1,7 +1,4 @@
-package ir.ac.kntu.characters;
-
-import ir.ac.kntu.MapData;
-import javafx.scene.layout.GridPane;
+package ir.ac.kntu.modules.characters;
 
 public interface Alive {
     void move(int x, int y) throws InterruptedException;

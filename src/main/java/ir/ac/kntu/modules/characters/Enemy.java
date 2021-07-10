@@ -1,6 +1,6 @@
-package ir.ac.kntu.characters;
+package ir.ac.kntu.modules.characters;
 
-import ir.ac.kntu.MapData;
+import ir.ac.kntu.logic.MapData;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public abstract class Enemy implements Alive, Serializable {
     private final MapData mapData;
+
     private final GridPane gridPane;
 
     private double xSpeed;

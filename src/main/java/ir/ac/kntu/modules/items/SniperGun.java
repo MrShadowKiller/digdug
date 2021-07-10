@@ -1,4 +1,4 @@
-package ir.ac.kntu.items;
+package ir.ac.kntu.modules.items;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package ir.ac.kntu.items;
+package ir.ac.kntu.modules.items;
 
 public class AirGun extends Weapon {
     public AirGun() {

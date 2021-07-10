@@ -1,9 +1,9 @@
-package ir.ac.kntu;
+package ir.ac.kntu.logic;
 
-import ir.ac.kntu.characters.*;
-import ir.ac.kntu.items.Block;
-import ir.ac.kntu.items.Dirt;
-import ir.ac.kntu.items.Stone;
+import ir.ac.kntu.modules.characters.*;
+import ir.ac.kntu.modules.items.Block;
+import ir.ac.kntu.modules.items.Dirt;
+import ir.ac.kntu.modules.items.Stone;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -126,20 +126,6 @@ public class MapBuilder {
         }
     }
 
-//    public void putPlayerInRandom(Player player) {
-//        ArrayList<ArrayList<Block>> blocks = mapData.getBlocks();
-//        for (int i = 0; i < blocks.size(); i++) {
-//            for (int j = 0; j < blocks.get(i).size(); j++) {
-//                if (blocks.get(i).get(j).isUsed()) {
-//
-//                    gridPane.getChildren().remove(blocks.get(i).get(j).getImageView());
-//                    gridPane.add(player.getCurrentImageView(), j, i);
-//                    return;
-//                }
-//            }
-//        }
-//    }
-
     public void creatRandomEnemies(int ballons) {
         ArrayList<Enemy> enemies = mapData.getEnemies();
         for (int i = 0; i < ballons; i++) {
@@ -148,6 +134,21 @@ public class MapBuilder {
         mapData.getEnemies().add(new Dragon(1, 3, gridPane, mapData));
 
 
+    }
+
+    public void createRandomItem() {
+        RandomItem randomItem = new RandomItem(mapData);
+        Thread threadRandom = new Thread(() -> {
+            while (!mapData.isGameFinished()) {
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(randomItem);
+            }
+        });
+        threadRandom.start();
     }
 
     public int randomIntExcept(int exception, int range) {

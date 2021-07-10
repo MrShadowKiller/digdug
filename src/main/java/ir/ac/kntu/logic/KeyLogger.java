@@ -1,10 +1,10 @@
-package ir.ac.kntu;
+package ir.ac.kntu.logic;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
-import static ir.ac.kntu.characters.Direction.*;
-import static ir.ac.kntu.characters.Direction.LEFT;
+import static ir.ac.kntu.modules.characters.Direction.*;
+import static ir.ac.kntu.modules.characters.Direction.LEFT;
 
 public class KeyLogger implements EventHandler<KeyEvent> {
     private final MapData mapData;
@@ -31,7 +31,7 @@ public class KeyLogger implements EventHandler<KeyEvent> {
     public void handle(KeyEvent keyEvent) {
         speed /= mapData.getCurrentPlayer().getxSpeed();
 
-        if (!mapData.getCurrentPlayer().isAlive()) {
+        if (mapData.isGameFinished()) {
             return;
         }
         if (delayKey != null && delayKey.isAlive()) {
@@ -58,6 +58,8 @@ public class KeyLogger implements EventHandler<KeyEvent> {
             case SHIFT:
                 mapData.getCurrentPlayer().attack();
                 break;
+            default:
+                return;
         }
         delayKey = new Thread(runDelay);
         delayKey.start();
