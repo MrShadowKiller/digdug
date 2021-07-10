@@ -23,10 +23,10 @@ public class EnemyAI implements Runnable {
 
     @Override
     public void run() {
-        int playerX = GridPane.getColumnIndex(mapData.getCurrentPlayer().getCurrentImageView());
-        int playerY = GridPane.getRowIndex(mapData.getCurrentPlayer().getCurrentImageView());
-        int enemyX = GridPane.getColumnIndex(enemy.getCurrentImageView());
-        int enemyY = GridPane.getRowIndex(enemy.getCurrentImageView());
+        int playerX = mapData.getCurrentPlayer().getCol();
+        int playerY = mapData.getCurrentPlayer().getRow();
+        int enemyX = enemy.getCol();
+        int enemyY = enemy.getRow();
 
         Way[][] pred = new Way[10][12];
         if (findWayToPlayer(enemyY, enemyX, playerY, playerX, pred)) {
@@ -115,8 +115,4 @@ public class EnemyAI implements Runnable {
         return false;
     }
 
-
-    public void moveUp() {
-
-    }
 }

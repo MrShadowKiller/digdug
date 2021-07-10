@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class Player implements Alive {
     private MapData mapData;
-    private GridPane gridPane;
 
     private String name = "ALEX";
     private int totalGames = 0;
@@ -30,12 +29,11 @@ public class Player implements Alive {
     private ImageView currentImageView;
     private ImageView attackImageView;
 
-    public Player(GridPane gridPane, MapData mapData, String name) {
+    public Player(MapData mapData, String name) {
         this.name = name;
         weapon = new AirGun();
         images = new ArrayList<>();
         this.mapData = mapData;
-        this.gridPane = gridPane;
         applyImages();
     }
 
@@ -65,8 +63,7 @@ public class Player implements Alive {
                 if (!enemy.isAlive()) {
                     continue;
                 }
-                if (GridPane.getRowIndex(enemy.getCurrentImageView()) == row &&
-                        GridPane.getColumnIndex(enemy.getCurrentImageView()) == col) {
+                if (enemy.getRow() == row && enemy.getCol() == col) {
                     System.out.println("Collided ENEMY!");
                     return true;
                 }
@@ -77,9 +74,14 @@ public class Player implements Alive {
     }
 
     public void collisionWithStone(int row, int col) {
+
         if (row > 1 && mapData.getBlocks().get(row - 1).get(col) instanceof Stone) {
-            ((Stone)mapData.getBlocks().get(row - 1).get(col)).fallStone();
-            setCurrentImageView(8);
+            if (!mapData.getBlocks().get(row - 1).get(col).isUsed()){
+                ((Stone)mapData.getBlocks().get(row - 1).get(col)).fallStone();
+                setCurrentImageView(8);
+            } else {
+                setCurrentImageView(4);
+            }
         } else {
             setCurrentImageView(4);
         }
@@ -87,16 +89,27 @@ public class Player implements Alive {
 
     @Override
     public void move(int x, int y) {
-        int newRow = GridPane.getRowIndex(currentImageView) + y * ySpeed;
-        int newCol = GridPane.getColumnIndex(currentImageView) + x * xSpeed;
+        int newRow = getRow() + y * ySpeed;
+        int newCol = getCol() + x * xSpeed;
         try {
             if (!checkCollide(newRow, newCol)) {
                 System.out.println("Player Location : " + newRow + " " + newCol);
                 mapData.getBlocks().get(newRow).get(newCol).setUsed(true);
-                gridPane.getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
+                mapData.getGridPane().getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
                 GridPane.setRowIndex(currentImageView, newRow);
                 GridPane.setColumnIndex(currentImageView, newCol);
                 collisionWithStone(newRow, newCol);
+                if (mapData.getItem() != null) {
+                    if (mapData.getItem().getRow() == newRow && mapData.getItem().getCol() == newCol) {
+                        System.out.println("ON ITEM");
+                        mapData.getItem().doEffect(this);
+                        mapData.getGridPane().getChildren().remove(mapData.getItem().getImageView());
+                        mapData.setItem(null);
+                        System.out.println("Health : " + hp);
+                        System.out.println("Speed : " + xSpeed);
+                        System.out.println("Range : " + weapon.getHitRange());
+                    }
+                }
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Out Of Map!");
@@ -112,11 +125,26 @@ public class Player implements Alive {
 
     @Override
     public void getHit(int damage) {
+        System.out.println("Player got hit!\nCurrent HP : " + hp);
+
         hp -= damage;
+        if (!isAlive()){
+            deadAnimation();
+        }
     }
 
     @Override
     public void deadAnimation() {
+        getCurrentImageView().setImage(images.get(5));
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> {
+            mapData.getGridPane().getChildren().remove(this.getCurrentImageView());
+            getCurrentImageView().setImage(images.get(6));
+            PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(c -> mapData.getGridPane().getChildren().remove(this.getCurrentImageView()));
+            pause1.play();
+        });
+        pause.play();
 
     }
 
@@ -152,10 +180,10 @@ public class Player implements Alive {
 
     public void attack() {
         System.out.println("Player is attacking!");
-        int playerX = GridPane.getColumnIndex(currentImageView);
-        int playerY = GridPane.getRowIndex(currentImageView);
+        int playerX = getCol();
+        int playerY = getRow();
         int col = playerX, row = playerY;
-        gridPane.add(attackImageView, playerX + direction.getX(), playerY + direction.getY());
+        mapData.getGridPane().add(attackImageView, playerX + direction.getX(), playerY + direction.getY());
         attackAnimation();
 
         while (col - playerX < weapon.getHitRange() &&
@@ -172,8 +200,7 @@ public class Player implements Alive {
             }
 
             for (Enemy enemy : mapData.getEnemies()) {
-                if (GridPane.getRowIndex(enemy.getCurrentImageView()) == row &&
-                        GridPane.getColumnIndex(enemy.getCurrentImageView()) == col) {
+                if (enemy.getRow() == row && enemy.getCol() == col) {
                     enemy.getHit(weapon.getDamage());
                     System.out.println("Enemy got hit at : " + row + " " + col);
                     if (!enemy.isAlive()){
@@ -186,7 +213,7 @@ public class Player implements Alive {
 
     public void attackAnimation(){
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.3));
-        pauseTransition.setOnFinished(e -> gridPane.getChildren().remove(attackImageView));
+        pauseTransition.setOnFinished(e -> mapData.getGridPane().getChildren().remove(attackImageView));
         pauseTransition.play();
     }
 

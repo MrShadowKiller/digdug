@@ -1,6 +1,7 @@
 package ir.ac.kntu.items;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 public abstract class Item implements ItemEffect {
@@ -14,5 +15,11 @@ public abstract class Item implements ItemEffect {
         return imageView;
     }
 
+    public int getRow(){
+        return GridPane.getRowIndex(getImageView());
+    }
 
+    public int getCol(){
+        return GridPane.getColumnIndex(getImageView());
+    }
 }

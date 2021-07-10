@@ -1,6 +1,7 @@
 package ir.ac.kntu.items;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 public abstract class Block {
     private ImageView imageView;
@@ -28,4 +29,13 @@ public abstract class Block {
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
+
+    public int getRow(){
+        return GridPane.getRowIndex(getImageView());
+    }
+
+    public int getCol(){
+        return GridPane.getColumnIndex(getImageView());
+    }
+
 }

@@ -31,6 +31,8 @@ public abstract class Enemy implements Alive {
     private Thread enemyThread;
 
 
+
+
     public Enemy(double xSpeed, double ySpeed, int hp,int point, GridPane gridPane, MapData mapData) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
@@ -62,8 +64,17 @@ public abstract class Enemy implements Alive {
         isActive = false;
     }
 
+    public boolean collisionWithPlayer(int col,int row){
+        if (mapData.getCurrentPlayer().getCol() == col && mapData.getCurrentPlayer().getRow() == row){
+            mapData.getCurrentPlayer().getHit(1);
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void move(int col, int row) {
+        collisionWithPlayer(col,row);
         GridPane.setRowIndex(currentImageView, row);
         GridPane.setColumnIndex(currentImageView, col);
     }
