@@ -23,7 +23,6 @@ public class EnemyAI implements Runnable {
 
     @Override
     public void run() {
-
         int playerX = GridPane.getColumnIndex(mapData.getCurrentPlayer().getCurrentImageView());
         int playerY = GridPane.getRowIndex(mapData.getCurrentPlayer().getCurrentImageView());
         int enemyX = GridPane.getColumnIndex(enemy.getCurrentImageView());
@@ -31,32 +30,28 @@ public class EnemyAI implements Runnable {
 
         Way[][] pred = new Way[10][12];
         if (findWayToPlayer(enemyY, enemyX, playerY, playerX, pred)) {
-
-
             LinkedList<Way> path = new LinkedList<>();
 
             int crawlY = playerY;
             int crawlX = playerX;
-
+            int temp = 0;
             path.add(new Way(crawlY, crawlX));
+
             while (pred[crawlY][crawlX] != null) {
                 path.add(pred[crawlY][crawlX]);
+                temp = crawlX;
                 crawlX = pred[crawlY][crawlX].getCol();
-                try {
-                    crawlY = pred[crawlY][crawlX].getRow();
-
-                } catch (NullPointerException e) {
-                    System.out.println("Eror ! " + crawlX + " cralw x  Crawl Y : " );
-                }
+                crawlY = pred[crawlY][temp].getRow();
             }
 
-                Way currentWay = path.removeLast();
-                GridPane.setRowIndex(enemy.getCurrentImageView(), currentWay.getRow());
-                GridPane.setColumnIndex(enemy.getCurrentImageView(), currentWay.getCol());
-
+            path.removeLast();
+            Way currentWay = path.removeLast();
+            if (!enemy.isAlive()){
+                return;
+            }
+            System.out.println("Enemy on Way : " + currentWay.getRow() +  currentWay.getCol());
+            enemy.move(currentWay.getCol(), currentWay.getRow());
         }
-
-
     }
 
     public boolean findWayToPlayer(int enemyY, int enemyX, int playerY, int playerX, Way[][] pred) {
@@ -92,7 +87,6 @@ public class EnemyAI implements Runnable {
                 }
             }
         }
-        System.out.println("test");
         return false;
     }
 
@@ -116,11 +110,7 @@ public class EnemyAI implements Runnable {
 
     public boolean checkCollide(int row, int col) {
         if (!mapData.getBlocks().get(row).get(col).isUsed()) {
-            if (mapData.getBlocks().get(row).get(col) instanceof Dirt) {
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         }
         return false;
     }

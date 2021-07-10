@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Balloon extends Enemy {
     public Balloon(double speed, int hp, GridPane gridPane, MapData mapData) {
-        super(speed, speed, hp, gridPane, mapData);
+        super(speed, speed, hp,5, gridPane, mapData);
         applyImages();
     }
 

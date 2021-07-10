@@ -1,6 +1,7 @@
 package ir.ac.kntu;
 
 import ir.ac.kntu.characters.Direction;
+import ir.ac.kntu.characters.Enemy;
 import ir.ac.kntu.characters.Player;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -33,8 +34,10 @@ public class GameLogic {
         Player player = new Player(gridPane,mapData,"mamad");
         mapData.setCurrentPlayer(player);
         mapBuilder.startBuild(player);
-
         scene.setOnKeyPressed(new KeyLogger(mapData));
+        for (Enemy enemy : mapData.getEnemies()){
+            enemy.startEnemyAI();
+        }
 
 
     }

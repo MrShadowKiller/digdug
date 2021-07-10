@@ -24,6 +24,7 @@ public class Player implements Alive {
     private Weapon weapon;
     private Direction direction;
     private boolean isShooting = false;
+    private int playerScore = 0;
     private int playerHighScore = 0;
     private ArrayList<Image> images;
     private ImageView currentImageView;
@@ -175,6 +176,9 @@ public class Player implements Alive {
                         GridPane.getColumnIndex(enemy.getCurrentImageView()) == col) {
                     enemy.getHit(weapon.getDamage());
                     System.out.println("Enemy got hit at : " + row + " " + col);
+                    if (!enemy.isAlive()){
+                        playerScore += enemy.getPoint();
+                    }
                 }
             }
         }
@@ -257,5 +261,13 @@ public class Player implements Alive {
 
     public void setCurrentImageView(int num) {
         currentImageView.setImage(images.get(num - 1));
+    }
+
+    public int getPlayerScore() {
+        return playerScore;
+    }
+
+    public void setPlayerScore(int playerScore) {
+        this.playerScore = playerScore;
     }
 }

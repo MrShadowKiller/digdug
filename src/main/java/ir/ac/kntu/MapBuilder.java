@@ -146,21 +146,9 @@ public class MapBuilder {
             mapData.getEnemies().add(new Balloon(1,2,gridPane,mapData));
         }
         mapData.getEnemies().add(new Dragon(1,3,gridPane,mapData));
-//        for (int i = 0;i<4;i++){
-            Thread thread = new Thread(()->{
-                EnemyAI enemyAI= new EnemyAI(enemies.get(0),gridPane,mapData);
-                while (true) {
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Platform.runLater(enemyAI);
-                }
-            });
 
-            thread.start();
-//        }
+
+
 
     }
 

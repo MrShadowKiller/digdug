@@ -1,12 +1,12 @@
 package ir.ac.kntu.characters;
 
 import ir.ac.kntu.MapData;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public abstract class Enemy implements Alive {
     private MapData mapData;
@@ -18,21 +18,59 @@ public abstract class Enemy implements Alive {
 
     private int hp;
 
-    private boolean isShooting = false;
+    private int point;
+
+    private boolean isActive = true;
 
     private ArrayList<Image> images;
 
     private ImageView currentImageView;
 
+    private EnemyAI enemyAI;
 
-    public Enemy(double xSpeed, double ySpeed, int hp,GridPane gridPane,MapData mapData) {
+    private Thread enemyThread;
+
+
+    public Enemy(double xSpeed, double ySpeed, int hp,int point, GridPane gridPane, MapData mapData) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.hp = hp;
+        this.point = point;
         currentImageView = new ImageView();
         images = new ArrayList<>();
         this.gridPane = gridPane;
         this.mapData = mapData;
+        enemyAI = new EnemyAI(this, gridPane, mapData);
+
+    }
+
+    public void startEnemyAI() {
+        enemyThread = new Thread(() -> {
+            while (isActive) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(enemyAI);
+            }
+        });
+        enemyThread.start();
+    }
+
+    public void stopEnemyAI() {
+        isActive = false;
+    }
+
+    @Override
+    public void move(int col, int row) {
+        GridPane.setRowIndex(currentImageView, row);
+        GridPane.setColumnIndex(currentImageView, col);
+    }
+
+    @Override
+    public boolean isAlive() {
+        return hp > 0;
     }
 
     public double getxSpeed() {
@@ -59,12 +97,12 @@ public abstract class Enemy implements Alive {
         this.hp = hp;
     }
 
-    public boolean isShooting() {
-        return isShooting;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setShooting(boolean shooting) {
-        isShooting = shooting;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public ArrayList<Image> getImages() {
@@ -91,14 +129,7 @@ public abstract class Enemy implements Alive {
         return gridPane;
     }
 
-    @Override
-    public void move(int x, int y) {
-        GridPane.setRowIndex(currentImageView, GridPane.getRowIndex(currentImageView) + y);
-        GridPane.setColumnIndex(currentImageView, GridPane.getColumnIndex(currentImageView) + x);
-    }
-
-    @Override
-    public boolean isAlive() {
-        return hp > 0;
+    public int getPoint() {
+        return point;
     }
 }

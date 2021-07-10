@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Dragon extends Enemy{
     public Dragon(double speed, int hp, GridPane gridPane, MapData mapData) {
-        super(speed, speed, hp,gridPane,mapData);
+        super(speed, speed, hp,10,gridPane,mapData);
         applyImages();
     }
 
