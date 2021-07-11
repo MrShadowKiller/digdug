@@ -1,5 +1,6 @@
 package ir.ac.kntu.modules.characters;
 
+import ir.ac.kntu.fxDatabase;
 import ir.ac.kntu.logic.MapData;
 import ir.ac.kntu.modules.items.*;
 import javafx.animation.PauseTransition;
@@ -17,6 +18,8 @@ public class Player implements Alive, Serializable {
 
     private String name;
     private int totalGames = 0;
+    private int row;
+    private int col;
     private int xSpeed = 1;
     private int ySpeed = 1;
     private int hp = 3;
@@ -25,29 +28,29 @@ public class Player implements Alive, Serializable {
     private boolean isShooting = false;
     private int playerScore = 0;
     private int playerHighScore = 0;
-    private final ArrayList<Image> images;
-    private ImageView currentImageView;
-    private ImageView attackImageView;
 
     public Player(MapData mapData, String name) {
         this.name = name;
         weapon = new AirGun();
-        images = new ArrayList<>();
         this.mapData = mapData;
         applyImages();
+        row = 0;
+        col = 5;
     }
 
     public void applyImages() {
         for (int i = 1; i <= 8; i++) {
             Image image = new Image("assets\\player\\p" + i + ".png");
-            images.add(image);
+            fxDatabase.getInstance().getPlayerImages().add(image);
         }
-        currentImageView = new ImageView(images.get(0));
-        currentImageView.setFitHeight(40);
-        currentImageView.setFitWidth(40);
-        attackImageView = new ImageView("assets\\player\\w.png");
-        attackImageView.setFitWidth(40);
-        attackImageView.setFitHeight(40);
+        ImageView playerImageView = new ImageView(getImages().get(0));
+        playerImageView.setFitHeight(40);
+        playerImageView.setFitWidth(40);
+        fxDatabase.getInstance().setPlayerCurrent(playerImageView);
+        ImageView playerImageViewAttack = new ImageView("assets\\player\\w.png");
+        playerImageViewAttack.setFitWidth(40);
+        playerImageViewAttack.setFitHeight(40);
+        fxDatabase.getInstance().setPlayerAttack(playerImageViewAttack);
     }
 
     public boolean checkCollide(int row, int col) {
@@ -95,15 +98,17 @@ public class Player implements Alive, Serializable {
             if (!checkCollide(newRow, newCol)) {
                 System.out.println("Player Location : " + newRow + " " + newCol);
                 mapData.getBlocks().get(newRow).get(newCol).setUsed(true);
-                mapData.getGridPane().getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
-                GridPane.setRowIndex(currentImageView, newRow);
-                GridPane.setColumnIndex(currentImageView, newCol);
+                fxDatabase.getInstance().getGridPane().getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
+                GridPane.setRowIndex(getCurrentImageView(), newRow);
+                row = newRow;
+                GridPane.setColumnIndex(getCurrentImageView(), newCol);
+                col = newCol;
                 collisionWithStone(newRow, newCol);
                 if (mapData.getItem() != null) {
                     if (mapData.getItem().getRow() == newRow && mapData.getItem().getCol() == newCol) {
                         System.out.println("ON ITEM");
                         mapData.getItem().doEffect(this);
-                        mapData.getGridPane().getChildren().remove(mapData.getItem().getImageView());
+                        fxDatabase.getInstance().getGridPane().getChildren().remove(mapData.getItem().getImageView());
                         mapData.setItem(null);
                         System.out.println("Health : " + hp);
                         System.out.println("Speed : " + xSpeed);
@@ -136,13 +141,13 @@ public class Player implements Alive, Serializable {
 
     @Override
     public void deadAnimation() {
-        getCurrentImageView().setImage(images.get(5));
+        getCurrentImageView().setImage(getImages().get(5));
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(e -> {
-            mapData.getGridPane().getChildren().remove(this.getCurrentImageView());
-            getCurrentImageView().setImage(images.get(6));
+            fxDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView());
+            getCurrentImageView().setImage(getImages().get(6));
             PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(c -> mapData.getGridPane().getChildren().remove(this.getCurrentImageView()));
+            pause.setOnFinished(c -> fxDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView()));
             pause1.play();
         });
         pause.play();
@@ -153,28 +158,28 @@ public class Player implements Alive, Serializable {
         this.direction = direction;
         switch (direction) {
             case UP:
-                currentImageView.setRotationAxis(Rotate.Z_AXIS);
-                attackImageView.setRotationAxis(Rotate.Z_AXIS);
-                currentImageView.setRotate(-90);
-                attackImageView.setRotate(-90);
+                getCurrentImageView().setRotationAxis(Rotate.Z_AXIS);
+                getAttackImageView().setRotationAxis(Rotate.Z_AXIS);
+                getCurrentImageView().setRotate(-90);
+                getAttackImageView().setRotate(-90);
                 break;
             case DOWN:
-                currentImageView.setRotationAxis(Rotate.Z_AXIS);
-                attackImageView.setRotationAxis(Rotate.Z_AXIS);
-                currentImageView.setRotate(90);
-                attackImageView.setRotate(90);
+                getCurrentImageView().setRotationAxis(Rotate.Z_AXIS);
+                getAttackImageView().setRotationAxis(Rotate.Z_AXIS);
+                getCurrentImageView().setRotate(90);
+                getAttackImageView().setRotate(90);
                 break;
             case RIGHT:
-                currentImageView.setRotationAxis(Rotate.Y_AXIS);
-                attackImageView.setRotationAxis(Rotate.Y_AXIS);
-                currentImageView.setRotate(360);
-                attackImageView.setRotate(360);
+                getCurrentImageView().setRotationAxis(Rotate.Y_AXIS);
+                getAttackImageView().setRotationAxis(Rotate.Y_AXIS);
+                getCurrentImageView().setRotate(360);
+                getAttackImageView().setRotate(360);
                 break;
             case LEFT:
-                currentImageView.setRotationAxis(Rotate.Y_AXIS);
-                attackImageView.setRotationAxis(Rotate.Y_AXIS);
-                currentImageView.setRotate(180);
-                attackImageView.setRotate(180);
+                getCurrentImageView().setRotationAxis(Rotate.Y_AXIS);
+                getAttackImageView().setRotationAxis(Rotate.Y_AXIS);
+                getCurrentImageView().setRotate(180);
+                getAttackImageView().setRotate(180);
                 break;
             default:
                 break;
@@ -186,7 +191,7 @@ public class Player implements Alive, Serializable {
         int playerX = getCol();
         int playerY = getRow();
         int col = playerX, row = playerY;
-        mapData.getGridPane().add(attackImageView, playerX + direction.getX(), playerY + direction.getY());
+        fxDatabase.getInstance().getGridPane().add(fxDatabase.getInstance().getPlayerAttack(), playerX + direction.getX(), playerY + direction.getY());
         attackAnimation();
 
         while (col - playerX < weapon.getHitRange() &&
@@ -216,16 +221,16 @@ public class Player implements Alive, Serializable {
 
     public void attackAnimation() {
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.3));
-        pauseTransition.setOnFinished(e -> mapData.getGridPane().getChildren().remove(attackImageView));
+        pauseTransition.setOnFinished(e -> fxDatabase.getInstance().getGridPane().getChildren().remove(fxDatabase.getInstance().getPlayerAttack()));
         pauseTransition.play();
     }
 
     public int getRow() {
-        return GridPane.getRowIndex(currentImageView);
+        return row;
     }
 
     public int getCol() {
-        return GridPane.getColumnIndex(currentImageView);
+        return col;
     }
 
 
@@ -294,11 +299,20 @@ public class Player implements Alive, Serializable {
     }
 
     public ImageView getCurrentImageView() {
-        return currentImageView;
+        return fxDatabase.getInstance().getPlayerCurrent();
+    }
+
+    public ImageView getAttackImageView() {
+        return fxDatabase.getInstance().getPlayerAttack();
     }
 
     public void setCurrentImageView(int num) {
-        currentImageView.setImage(images.get(num - 1));
+        fxDatabase.getInstance().getPlayerCurrent()
+                .setImage(getImages().get(num - 1));
+    }
+
+    public ArrayList<Image> getImages(){
+        return fxDatabase.getInstance().getPlayerImages();
     }
 
     public int getPlayerScore() {

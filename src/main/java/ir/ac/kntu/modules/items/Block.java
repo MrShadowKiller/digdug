@@ -1,23 +1,25 @@
 package ir.ac.kntu.modules.items;
 
+import ir.ac.kntu.fxDatabase;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
 import java.io.Serializable;
 
 public abstract class Block implements Serializable {
-    private ImageView imageView;
-
     private boolean isUsed = false;
+    private int row;
+    private int col;
 
-    public Block(ImageView imageView) {
-        this.imageView = imageView;
+    public Block(int row,int col,ImageView imageView) {
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
+        this.row = row;
+        this.col = col;
+        fxDatabase.getInstance().getBlockViewImages().get(row).set(col,imageView);
     }
 
     public ImageView getImageView() {
-        return imageView;
+        return fxDatabase.getInstance().getBlockViewImages().get(row).get(col);
     }
 
     public boolean isUsed() {
@@ -28,16 +30,12 @@ public abstract class Block implements Serializable {
         isUsed = used;
     }
 
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
     public int getRow() {
-        return GridPane.getRowIndex(getImageView());
+        return row;
     }
 
     public int getCol() {
-        return GridPane.getColumnIndex(getImageView());
+        return col;
     }
 
 }

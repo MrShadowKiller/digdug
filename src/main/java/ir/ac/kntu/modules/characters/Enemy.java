@@ -1,18 +1,21 @@
 package ir.ac.kntu.modules.characters;
 
+import ir.ac.kntu.fxDatabase;
 import ir.ac.kntu.logic.MapData;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public abstract class Enemy implements Alive, Serializable {
     private final MapData mapData;
 
-    private final GridPane gridPane;
+    private int row;
+
+    private int col;
+
+    private int id;
 
     private double xSpeed;
 
@@ -24,25 +27,19 @@ public abstract class Enemy implements Alive, Serializable {
 
     private boolean isActive = true;
 
-    private ArrayList<Image> images;
-
-    private ImageView currentImageView;
-
     private final EnemyAI enemyAI;
 
     private Thread enemyThread;
 
 
-    public Enemy(double xSpeed, double ySpeed, int hp, int point, GridPane gridPane, MapData mapData) {
+    public Enemy(double xSpeed, double ySpeed, int id,int hp, int point, MapData mapData) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.hp = hp;
+        this.id = id;
         this.point = point;
-        currentImageView = new ImageView();
-        images = new ArrayList<>();
-        this.gridPane = gridPane;
         this.mapData = mapData;
-        enemyAI = new EnemyAI(this, gridPane, mapData);
+        enemyAI = new EnemyAI(this, mapData);
 
     }
 
@@ -75,8 +72,10 @@ public abstract class Enemy implements Alive, Serializable {
     @Override
     public void move(int col, int row) {
         collisionWithPlayer(col, row);
-        GridPane.setRowIndex(currentImageView, row);
-        GridPane.setColumnIndex(currentImageView, col);
+        this.row = row;
+        this.col = col;
+        GridPane.setRowIndex(getCurrentImageView(), row);
+        GridPane.setColumnIndex(getCurrentImageView(), col);
     }
 
     @Override
@@ -84,12 +83,20 @@ public abstract class Enemy implements Alive, Serializable {
         return hp > 0;
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
     public int getRow() {
-        return GridPane.getRowIndex(currentImageView);
+        return row;
     }
 
     public int getCol() {
-        return GridPane.getColumnIndex(currentImageView);
+        return col;
     }
 
     public double getxSpeed() {
@@ -116,37 +123,18 @@ public abstract class Enemy implements Alive, Serializable {
         this.hp = hp;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public ArrayList<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(ArrayList<Image> images) {
-        this.images = images;
-    }
-
     public ImageView getCurrentImageView() {
-        return currentImageView;
+        return fxDatabase.getInstance().getEnemyViewImages().get(id);
     }
 
     public void setCurrentImageView(ImageView currentImageView) {
-        this.currentImageView = currentImageView;
+        fxDatabase.getInstance().getEnemyViewImages().add(currentImageView);
     }
 
     public MapData getMapData() {
         return mapData;
     }
 
-    public GridPane getGridPane() {
-        return gridPane;
-    }
 
     public int getPoint() {
         return point;

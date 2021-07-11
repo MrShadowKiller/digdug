@@ -1,26 +1,35 @@
 package ir.ac.kntu.modules.items;
 
+import ir.ac.kntu.fxDatabase;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
 import java.io.Serializable;
 
 public abstract class Item implements ItemEffect, Serializable {
-    private final ImageView imageView;
+    private int row;
+    private int col;
 
     public Item(ImageView imageView) {
-        this.imageView = imageView;
+        fxDatabase.getInstance().setItemImageView(imageView);
     }
 
     public ImageView getImageView() {
-        return imageView;
+        return fxDatabase.getInstance().getItemImageView();
     }
 
     public int getRow() {
-        return GridPane.getRowIndex(getImageView());
+        return row;
     }
 
     public int getCol() {
-        return GridPane.getColumnIndex(getImageView());
+        return col;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 }

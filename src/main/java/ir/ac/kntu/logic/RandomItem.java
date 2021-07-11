@@ -1,7 +1,9 @@
 package ir.ac.kntu.logic;
 
+import ir.ac.kntu.fxDatabase;
 import ir.ac.kntu.modules.characters.Enemy;
 import ir.ac.kntu.modules.items.*;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,14 @@ public class RandomItem implements Runnable {
     @Override
     public void run() {
         int randomInt = (int) (Math.random() * 100) % 3;
+
+        ImageView imageView = null;
+
+        try {
+            imageView = mapData.getItem().getImageView();
+        } catch (NullPointerException e){
+            System.out.println("No recent Item.");
+        }
         Item item = new Heart();
         switch (randomInt) {
             case 0:
@@ -32,12 +42,13 @@ public class RandomItem implements Runnable {
         ArrayList<Block> emptyBlocks = findEmptyBlocks();
         int randomInt2 = (int) (Math.random() * 100) % emptyBlocks.size();
 
-        if (mapData.getItem() != null) {
-            mapData.getGridPane().getChildren().remove(mapData.getItem().getImageView());
+        if (imageView != null) {
+            fxDatabase.getInstance().getGridPane().getChildren().remove(imageView);
         }
         mapData.setItem(item);
-        mapData.getGridPane().add(item.getImageView(), emptyBlocks.get(randomInt2).getCol(), emptyBlocks.get(randomInt2).getRow());
-
+        fxDatabase.getInstance().getGridPane().add(item.getImageView(), emptyBlocks.get(randomInt2).getCol(), emptyBlocks.get(randomInt2).getRow());
+        item.setRow(emptyBlocks.get(randomInt2).getRow());
+        item.setCol(emptyBlocks.get(randomInt2).getCol());
     }
 
     public ArrayList<Block> findEmptyBlocks() {

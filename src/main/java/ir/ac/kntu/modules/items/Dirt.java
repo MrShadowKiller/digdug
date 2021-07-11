@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 public class Dirt extends Block implements Serializable {
 
-    public Dirt() {
-        super(new ImageView("assets/dirt.png"));
+    public Dirt(int row,int col) {
+        super(row,col,new ImageView("assets/dirt.png"));
     }
 
 }

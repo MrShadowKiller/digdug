@@ -1,5 +1,6 @@
 package ir.ac.kntu.logic;
 
+import ir.ac.kntu.fxDatabase;
 import ir.ac.kntu.modules.characters.Enemy;
 import ir.ac.kntu.modules.characters.Player;
 import javafx.application.Platform;
@@ -8,10 +9,16 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class GameLogic {
     private final MapData mapData;
@@ -33,7 +40,7 @@ public class GameLogic {
         this.stage = stage;
         this.mapData = mapData;
         this.borderPane = borderPane;
-        mapBuilder = new MapBuilder(mapData.getGridPane(), mapData);
+        mapBuilder = new MapBuilder(fxDatabase.getInstance().getGridPane(), mapData);
 
     }
 
@@ -41,11 +48,11 @@ public class GameLogic {
         if (mapData.getCurrentPlayer() == null) {
             Player player = new Player(mapData, "mamad");
             mapData.setCurrentPlayer(player);
-
         }
-        scene.setOnKeyPressed(new KeyLogger(mapData));
+        scene.setOnKeyPressed(new KeyLogger(mapData,this));
         statusBar();
         playerStatus();
+
 
         mapBuilder.startBuild(mapData.getCurrentPlayer());
 
@@ -182,6 +189,7 @@ public class GameLogic {
     }
 
     public void gameLost() {
+//        savePlayers();
         mapData.setGameFinished(true);
         for (Enemy enemy : mapData.getEnemies()) {
             enemy.stopEnemyAI();
@@ -220,6 +228,7 @@ public class GameLogic {
     }
 
     public void gameWon() {
+//        savePlayers();
         mapData.setGameFinished(true);
         for (Enemy enemy : mapData.getEnemies()) {
             enemy.stopEnemyAI();
@@ -227,7 +236,6 @@ public class GameLogic {
         if (mapData.getCurrentPlayer().getPlayerHighScore() < mapData.getCurrentPlayer().getPlayerScore()) {
             mapData.getCurrentPlayer().setPlayerHighScore(mapData.getCurrentPlayer().getPlayerScore());
         }
-//        saveMapData();
         Pane pane = new Pane();
         pane.setMinSize(600, 700);
 
@@ -266,23 +274,38 @@ public class GameLogic {
         scene.setRoot(pane);
     }
 //
-//    public void saveMapData() {
-//        try (FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\MrShadowKiller\\Desktop\\University\\" +
-//                "Advanced Programming\\projects\\p4-digdug\\src\\main\\resources\\save\\lastgame" +
-//                "\\mapdata.txt", false);
-//             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-//            try {
-//                objectOutputStream.writeObject(mapData);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    public void saveMapData() {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/resources/assets/save/lastgame/mapdata.txt", false);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            try {
+                objectOutputStream.writeObject(mapData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void savePlayers(){
+        try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/resources/assets/save/players.txt", false);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            for(Player player: mapData.getPlayers()) {
+                try {
+                    objectOutputStream.writeObject(player);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public boolean checkAliveEnemies() {
         for (Enemy enemy : mapData.getEnemies()) {

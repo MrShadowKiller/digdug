@@ -12,7 +12,7 @@ public class EnemyAI implements Runnable, Serializable {
     private final MapData mapData;
     private Way[][] pred;
 
-    public EnemyAI(Enemy enemy, GridPane gridPane, MapData mapData) {
+    public EnemyAI(Enemy enemy, MapData mapData) {
         this.enemy = enemy;
         this.mapData = mapData;
     }
@@ -45,7 +45,7 @@ public class EnemyAI implements Runnable, Serializable {
             if (!enemy.isAlive()) {
                 return;
             }
-            System.out.println("Enemy on Way : " + currentWay.getRow() + currentWay.getCol());
+            System.out.println("Enemy on Way : " + currentWay.getRow() + " " + currentWay.getCol());
             enemy.move(currentWay.getCol(), currentWay.getRow());
         }
     }

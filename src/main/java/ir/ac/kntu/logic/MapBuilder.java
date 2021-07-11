@@ -36,12 +36,11 @@ public class MapBuilder {
         ArrayList<ArrayList<Block>> dirts = mapData.getBlocks();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 12; j++) {
-                dirts.get(i).add(new Dirt());
+                dirts.get(i).add(new Dirt(i,j));
                 ImageView imageView = new ImageView("assets/black.png");
                 imageView.setFitHeight(50);
                 imageView.setFitWidth(50);
                 gridPane.add(imageView, j, i);
-
                 gridPane.add(dirts.get(i).get(j).getImageView(), j, i);
             }
         }
@@ -63,7 +62,7 @@ public class MapBuilder {
                 continue;
             }
             gridPane.getChildren().remove(blocks.get(f).get(m).getImageView());
-            blocks.get(f).set(m, new Stone(mapData));
+            blocks.get(f).set(m, new Stone(f,m,mapData));
             gridPane.add(blocks.get(f).get(m).getImageView(), m, f);
         }
     }
@@ -90,11 +89,9 @@ public class MapBuilder {
                 gridPane.getChildren().remove(mapData.getBlocks().get(f).get(m - 1).getImageView());
                 gridPane.getChildren().remove(mapData.getBlocks().get(f).get(m - 2).getImageView());
             }
-            if (i == 0) {
-                gridPane.add(mapData.getEnemies().get(i + 2).getCurrentImageView(), m, f);
-            } else {
-                gridPane.add(mapData.getEnemies().get(i + 2).getCurrentImageView(), m, f);
-            }
+            gridPane.add(mapData.getEnemies().get(i + 2).getCurrentImageView(), m, f);
+            mapData.getEnemies().get(i + 2).setRow(f);
+            mapData.getEnemies().get(i + 2).setCol(m);
         }
 
     }
@@ -123,15 +120,17 @@ public class MapBuilder {
                 gridPane.getChildren().remove(mapData.getBlocks().get(f - 2).get(m).getImageView());
             }
             gridPane.add(mapData.getEnemies().get(i).getCurrentImageView(), m, f);
+            mapData.getEnemies().get(i).setRow(f);
+            mapData.getEnemies().get(i).setCol(m);
         }
     }
 
     public void creatRandomEnemies(int ballons) {
         ArrayList<Enemy> enemies = mapData.getEnemies();
         for (int i = 0; i < ballons; i++) {
-            mapData.getEnemies().add(new Balloon(1, 2, gridPane, mapData));
+            mapData.getEnemies().add(new Balloon(1, i,2, mapData));
         }
-        mapData.getEnemies().add(new Dragon(1, 3, gridPane, mapData));
+        mapData.getEnemies().add(new Dragon(1, ballons,3, mapData));
 
 
     }

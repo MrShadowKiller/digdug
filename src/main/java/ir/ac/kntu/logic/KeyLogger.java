@@ -1,6 +1,7 @@
 package ir.ac.kntu.logic;
 
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import static ir.ac.kntu.modules.characters.Direction.*;
@@ -15,8 +16,11 @@ public class KeyLogger implements EventHandler<KeyEvent> {
 
     private int speed = 250;
 
-    public KeyLogger(MapData mapData) {
+    private GameLogic gameLogic;
+
+    public KeyLogger(MapData mapData, GameLogic gameLogic) {
         this.mapData = mapData;
+        this.gameLogic = gameLogic;
         runDelay = () -> {
             try {
                 Thread.sleep(speed);
@@ -57,6 +61,11 @@ public class KeyLogger implements EventHandler<KeyEvent> {
                 break;
             case SHIFT:
                 mapData.getCurrentPlayer().attack();
+                break;
+            case C:
+//                if (!mapData.isGameFinished()) {
+//                    gameLogic.saveMapData();
+//                }
                 break;
             default:
                 return;

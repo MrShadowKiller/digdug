@@ -9,6 +9,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * @author Mohammad Shahabadi 9927453
+ */
 public class JavaFxApplication extends Application {
 
     public static void main(String[] args) {

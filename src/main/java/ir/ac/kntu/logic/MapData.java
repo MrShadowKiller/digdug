@@ -20,18 +20,15 @@ public class MapData implements Serializable {
 
     private ArrayList<Enemy> enemies;
 
-    private final GridPane gridPane;
-
     private boolean gameFinished = false;
 
-    public MapData(GridPane gridPane) {
+    public MapData() {
         blocks = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             blocks.add(new ArrayList<>());
         }
         players = new ArrayList<>();
         enemies = new ArrayList<>();
-        this.gridPane = gridPane;
     }
 
     public Item getItem() {
@@ -51,7 +48,7 @@ public class MapData implements Serializable {
     }
 
     public ArrayList<Player> getPlayers() {
-        return new ArrayList<>(players);
+        return players;
     }
 
     public void setPlayers(ArrayList<Player> players) {
@@ -74,9 +71,9 @@ public class MapData implements Serializable {
         this.currentPlayer = currentPlayer;
     }
 
-    public GridPane getGridPane() {
-        return gridPane;
-    }
+//    public GridPane getGridPane() {
+//        return gridPane;
+//    }
 
     public boolean isGameFinished() {
         return gameFinished;
