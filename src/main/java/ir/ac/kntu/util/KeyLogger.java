@@ -17,7 +17,7 @@ public class KeyLogger implements EventHandler<KeyEvent> {
 
     private int speed = 250;
 
-    private GameLogic gameLogic;
+    private final GameLogic gameLogic;
 
     public KeyLogger(MapData mapData, GameLogic gameLogic) {
         this.mapData = mapData;

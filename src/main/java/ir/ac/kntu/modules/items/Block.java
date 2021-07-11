@@ -1,25 +1,25 @@
 package ir.ac.kntu.modules.items;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
 
 public abstract class Block implements Serializable {
     private boolean isUsed = false;
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
 
-    public Block(int row,int col,ImageView imageView) {
+    public Block(int row, int col, ImageView imageView) {
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
         this.row = row;
         this.col = col;
-        fxDatabase.getInstance().getBlockViewImages().get(row).set(col,imageView);
+        FXDatabase.getInstance().getBlockViewImages().get(row).set(col, imageView);
     }
 
     public ImageView getImageView() {
-        return fxDatabase.getInstance().getBlockViewImages().get(row).get(col);
+        return FXDatabase.getInstance().getBlockViewImages().get(row).get(col);
     }
 
     public boolean isUsed() {

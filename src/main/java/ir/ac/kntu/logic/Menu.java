@@ -1,7 +1,7 @@
 package ir.ac.kntu.logic;
 
 import ir.ac.kntu.util.GameButton;
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.Player;
 import javafx.application.Platform;
@@ -46,7 +46,7 @@ public class Menu {
                 BackgroundSize.DEFAULT);
         pane.setBackground(new Background(myBI));
         GridPane gridPane = new GridPane();
-        fxDatabase.getInstance().setGridPane(gridPane);
+        FXDatabase.getInstance().setGridPane(gridPane);
         gridPane.setMinSize(600, 500);
         gridPane.setMaxSize(600, 500);
         gridPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -171,7 +171,7 @@ public class Menu {
         root.setStyle("-fx-border-width: 0 0 5 0;");
 
 
-        root.setCenter(fxDatabase.getInstance().getGridPane());
+        root.setCenter(FXDatabase.getInstance().getGridPane());
         scene.setRoot(root);
         GameLogic gameLogic = new GameLogic(root, scene, stage, mapData);
         gameLogic.start();

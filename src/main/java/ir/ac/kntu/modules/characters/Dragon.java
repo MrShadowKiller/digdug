@@ -1,6 +1,6 @@
 package ir.ac.kntu.modules.characters;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.logic.Map.MapData;
 import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class Dragon extends Enemy implements Serializable {
 
-    public Dragon(double speed,int id, int hp, MapData mapData) {
-        super(speed, speed,id, hp, 10, mapData);
+    public Dragon(double speed, int id, int hp, MapData mapData) {
+        super(speed, speed, id, hp, 10, mapData);
         applyImages();
     }
 
@@ -30,7 +30,7 @@ public class Dragon extends Enemy implements Serializable {
         ImageView fireImageView = new ImageView("assets/enemy/dragon/flame.png");
         fireImageView.setFitWidth(40);
         fireImageView.setFitHeight(40);
-        fxDatabase.getInstance().setDragonAttack(fireImageView);
+        FXDatabase.getInstance().setDragonAttack(fireImageView);
 
         setCurrentImageView(imageView);
     }
@@ -50,7 +50,7 @@ public class Dragon extends Enemy implements Serializable {
     public void deadAnimation() {
         getCurrentImageView().setImage(getImages().get(3));
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(e -> fxDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView()));
+        pause.setOnFinished(e -> FXDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView()));
         pause.play();
     }
 
@@ -65,7 +65,7 @@ public class Dragon extends Enemy implements Serializable {
                         }
                     }
                 }
-                fxDatabase.getInstance().getGridPane().add(getAttackImage(), getMapData().getCurrentPlayer().getCol(), getMapData().getCurrentPlayer().getRow());
+                FXDatabase.getInstance().getGridPane().add(getAttackImage(), getMapData().getCurrentPlayer().getCol(), getMapData().getCurrentPlayer().getRow());
                 attackAnimation();
 
             } else {
@@ -82,16 +82,16 @@ public class Dragon extends Enemy implements Serializable {
 
     public void attackAnimation() {
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(e -> fxDatabase.getInstance().getGridPane().getChildren().remove(getAttackImage()));
+        pause.setOnFinished(e -> FXDatabase.getInstance().getGridPane().getChildren().remove(getAttackImage()));
         pause.play();
     }
 
-    public ArrayList<Image> getImages(){
-        return fxDatabase.getInstance().getDragonImages();
+    public ArrayList<Image> getImages() {
+        return FXDatabase.getInstance().getDragonImages();
     }
 
-    public ImageView getAttackImage(){
-        return fxDatabase.getInstance().getDragonAttack();
+    public ImageView getAttackImage() {
+        return FXDatabase.getInstance().getDragonAttack();
     }
 
 }

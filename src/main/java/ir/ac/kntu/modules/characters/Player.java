@@ -1,6 +1,6 @@
 package ir.ac.kntu.modules.characters;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.navigation.Direction;
 import ir.ac.kntu.modules.items.*;
@@ -42,16 +42,16 @@ public class Player implements Alive, Serializable {
     public void applyImages() {
         for (int i = 1; i <= 8; i++) {
             Image image = new Image("assets\\player\\p" + i + ".png");
-            fxDatabase.getInstance().getPlayerImages().add(image);
+            FXDatabase.getInstance().getPlayerImages().add(image);
         }
         ImageView playerImageView = new ImageView(getImages().get(0));
         playerImageView.setFitHeight(40);
         playerImageView.setFitWidth(40);
-        fxDatabase.getInstance().setPlayerCurrent(playerImageView);
+        FXDatabase.getInstance().setPlayerCurrent(playerImageView);
         ImageView playerImageViewAttack = new ImageView("assets\\player\\w.png");
         playerImageViewAttack.setFitWidth(40);
         playerImageViewAttack.setFitHeight(40);
-        fxDatabase.getInstance().setPlayerAttack(playerImageViewAttack);
+        FXDatabase.getInstance().setPlayerAttack(playerImageViewAttack);
     }
 
     public boolean checkCollide(int row, int col) {
@@ -99,7 +99,7 @@ public class Player implements Alive, Serializable {
             if (!checkCollide(newRow, newCol)) {
                 System.out.println("Player Location : " + newRow + " " + newCol);
                 mapData.getBlocks().get(newRow).get(newCol).setUsed(true);
-                fxDatabase.getInstance().getGridPane().getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
+                FXDatabase.getInstance().getGridPane().getChildren().remove(mapData.getBlocks().get(newRow).get(newCol).getImageView());
                 GridPane.setRowIndex(getCurrentImageView(), newRow);
                 row = newRow;
                 GridPane.setColumnIndex(getCurrentImageView(), newCol);
@@ -109,7 +109,7 @@ public class Player implements Alive, Serializable {
                     if (mapData.getItem().getRow() == newRow && mapData.getItem().getCol() == newCol) {
                         System.out.println("ON ITEM");
                         mapData.getItem().doEffect(this);
-                        fxDatabase.getInstance().getGridPane().getChildren().remove(mapData.getItem().getImageView());
+                        FXDatabase.getInstance().getGridPane().getChildren().remove(mapData.getItem().getImageView());
                         mapData.setItem(null);
                         System.out.println("Health : " + hp);
                         System.out.println("Speed : " + xSpeed);
@@ -145,10 +145,10 @@ public class Player implements Alive, Serializable {
         getCurrentImageView().setImage(getImages().get(5));
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(e -> {
-            fxDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView());
+            FXDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView());
             getCurrentImageView().setImage(getImages().get(6));
             PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(c -> fxDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView()));
+            pause.setOnFinished(c -> FXDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView()));
             pause1.play();
         });
         pause.play();
@@ -192,7 +192,7 @@ public class Player implements Alive, Serializable {
         int playerX = getCol();
         int playerY = getRow();
         int col = playerX, row = playerY;
-        fxDatabase.getInstance().getGridPane().add(fxDatabase.getInstance().getPlayerAttack(), playerX + direction.getX(), playerY + direction.getY());
+        FXDatabase.getInstance().getGridPane().add(FXDatabase.getInstance().getPlayerAttack(), playerX + direction.getX(), playerY + direction.getY());
         attackAnimation();
 
         while (col - playerX < weapon.getHitRange() &&
@@ -222,7 +222,7 @@ public class Player implements Alive, Serializable {
 
     public void attackAnimation() {
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.3));
-        pauseTransition.setOnFinished(e -> fxDatabase.getInstance().getGridPane().getChildren().remove(fxDatabase.getInstance().getPlayerAttack()));
+        pauseTransition.setOnFinished(e -> FXDatabase.getInstance().getGridPane().getChildren().remove(FXDatabase.getInstance().getPlayerAttack()));
         pauseTransition.play();
     }
 
@@ -300,20 +300,20 @@ public class Player implements Alive, Serializable {
     }
 
     public ImageView getCurrentImageView() {
-        return fxDatabase.getInstance().getPlayerCurrent();
+        return FXDatabase.getInstance().getPlayerCurrent();
     }
 
     public ImageView getAttackImageView() {
-        return fxDatabase.getInstance().getPlayerAttack();
+        return FXDatabase.getInstance().getPlayerAttack();
     }
 
     public void setCurrentImageView(int num) {
-        fxDatabase.getInstance().getPlayerCurrent()
+        FXDatabase.getInstance().getPlayerCurrent()
                 .setImage(getImages().get(num - 1));
     }
 
-    public ArrayList<Image> getImages(){
-        return fxDatabase.getInstance().getPlayerImages();
+    public ArrayList<Image> getImages() {
+        return FXDatabase.getInstance().getPlayerImages();
     }
 
     public int getPlayerScore() {

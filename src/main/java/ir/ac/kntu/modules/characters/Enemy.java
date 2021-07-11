@@ -1,6 +1,6 @@
 package ir.ac.kntu.modules.characters;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.navigation.EnemyAI;
 import javafx.application.Platform;
@@ -16,7 +16,7 @@ public abstract class Enemy implements Alive, Serializable {
 
     private int col;
 
-    private int id;
+    private final int id;
 
     private double xSpeed;
 
@@ -33,7 +33,7 @@ public abstract class Enemy implements Alive, Serializable {
     private Thread enemyThread;
 
 
-    public Enemy(double xSpeed, double ySpeed, int id,int hp, int point, MapData mapData) {
+    public Enemy(double xSpeed, double ySpeed, int id, int hp, int point, MapData mapData) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.hp = hp;
@@ -125,11 +125,11 @@ public abstract class Enemy implements Alive, Serializable {
     }
 
     public ImageView getCurrentImageView() {
-        return fxDatabase.getInstance().getEnemyViewImages().get(id);
+        return FXDatabase.getInstance().getEnemyViewImages().get(id);
     }
 
     public void setCurrentImageView(ImageView currentImageView) {
-        fxDatabase.getInstance().getEnemyViewImages().add(currentImageView);
+        FXDatabase.getInstance().getEnemyViewImages().add(currentImageView);
     }
 
     public MapData getMapData() {

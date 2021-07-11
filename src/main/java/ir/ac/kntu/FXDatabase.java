@@ -6,38 +6,38 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-public class fxDatabase {
-    private static fxDatabase instance = new fxDatabase();
+public class FXDatabase {
+    private static final FXDatabase INSTANCE = new FXDatabase();
 
-    private  ArrayList<Image> ballonImages;
+    private ArrayList<Image> ballonImages;
 
-    private ArrayList<Image> dragonImages;
+    private final ArrayList<Image> dragonImages;
 
     private ImageView dragonAttack;
 
-    private ArrayList<ImageView> enemyViewImages;
+    private final ArrayList<ImageView> enemyViewImages;
 
-    private ArrayList<Image> playerImages;
+    private final ArrayList<Image> playerImages;
 
     private ImageView playerCurrent;
 
     private ImageView playerAttack;
 
-    private ArrayList<ArrayList<ImageView>> blockViewImages;
+    private final ArrayList<ArrayList<ImageView>> blockViewImages;
 
     private ImageView itemImageView;
 
     private GridPane gridPane;
 
-    public fxDatabase() {
+    public FXDatabase() {
         ballonImages = new ArrayList<>();
         dragonImages = new ArrayList<>();
         enemyViewImages = new ArrayList<>();
         playerImages = new ArrayList<>();
         blockViewImages = new ArrayList<>(10);
-        for (int i=0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             blockViewImages.add(new ArrayList<>(12));
-            for (int j = 0 ;j<12;j++){
+            for (int j = 0; j < 12; j++) {
                 blockViewImages.get(i).add(new ImageView());
             }
         }
@@ -51,8 +51,8 @@ public class fxDatabase {
         this.gridPane = gridPane;
     }
 
-    public static fxDatabase getInstance() {
-        return instance;
+    public static FXDatabase getInstance() {
+        return INSTANCE;
     }
 
     public ArrayList<Image> getBallonImages() {

@@ -1,6 +1,6 @@
 package ir.ac.kntu.modules.items;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
@@ -10,11 +10,11 @@ public abstract class Item implements ItemEffect, Serializable {
     private int col;
 
     public Item(ImageView imageView) {
-        fxDatabase.getInstance().setItemImageView(imageView);
+        FXDatabase.getInstance().setItemImageView(imageView);
     }
 
     public ImageView getImageView() {
-        return fxDatabase.getInstance().getItemImageView();
+        return FXDatabase.getInstance().getItemImageView();
     }
 
     public int getRow() {

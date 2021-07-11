@@ -1,6 +1,6 @@
 package ir.ac.kntu.logic.Map;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.modules.characters.Enemy;
 import ir.ac.kntu.modules.items.*;
 import javafx.scene.image.ImageView;
@@ -22,7 +22,7 @@ public class RandomItem implements Runnable {
 
         try {
             imageView = mapData.getItem().getImageView();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("No recent Item.");
         }
         Item item = new Heart();
@@ -43,10 +43,10 @@ public class RandomItem implements Runnable {
         int randomInt2 = (int) (Math.random() * 100) % emptyBlocks.size();
 
         if (imageView != null) {
-            fxDatabase.getInstance().getGridPane().getChildren().remove(imageView);
+            FXDatabase.getInstance().getGridPane().getChildren().remove(imageView);
         }
         mapData.setItem(item);
-        fxDatabase.getInstance().getGridPane().add(item.getImageView(), emptyBlocks.get(randomInt2).getCol(), emptyBlocks.get(randomInt2).getRow());
+        FXDatabase.getInstance().getGridPane().add(item.getImageView(), emptyBlocks.get(randomInt2).getCol(), emptyBlocks.get(randomInt2).getRow());
         item.setRow(emptyBlocks.get(randomInt2).getRow());
         item.setCol(emptyBlocks.get(randomInt2).getCol());
     }

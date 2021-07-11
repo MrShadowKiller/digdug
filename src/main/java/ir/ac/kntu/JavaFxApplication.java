@@ -18,7 +18,7 @@ public class JavaFxApplication extends Application {
         launch(args);
     }
 
-    public void start(Stage stage)  {
+    public void start(Stage stage) {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-border-width: 0 0 5 0;");
 

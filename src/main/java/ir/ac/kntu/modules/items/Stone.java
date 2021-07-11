@@ -1,6 +1,6 @@
 package ir.ac.kntu.modules.items;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.Enemy;
 import javafx.scene.image.ImageView;
@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class Stone extends Block implements Serializable {
     private final MapData mapData;
 
-    public Stone(int row,int col,MapData mapData) {
-        super(row,col,new ImageView("assets/gravel.png"));
+    public Stone(int row, int col, MapData mapData) {
+        super(row, col, new ImageView("assets/gravel.png"));
         this.mapData = mapData;
     }
 
@@ -34,7 +34,7 @@ public class Stone extends Block implements Serializable {
             }
         }
         mapData.getBlocks().get(stoneY).get(stoneX).setUsed(true);
-        fxDatabase.getInstance().getGridPane().getChildren().remove(getImageView());
+        FXDatabase.getInstance().getGridPane().getChildren().remove(getImageView());
 
     }
 }

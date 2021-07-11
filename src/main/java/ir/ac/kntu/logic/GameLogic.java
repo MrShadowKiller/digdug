@@ -1,6 +1,6 @@
 package ir.ac.kntu.logic;
 
-import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.logic.Map.MapBuilder;
 import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.Enemy;
@@ -42,7 +42,7 @@ public class GameLogic {
         this.stage = stage;
         this.mapData = mapData;
         this.borderPane = borderPane;
-        mapBuilder = new MapBuilder(fxDatabase.getInstance().getGridPane(), mapData);
+        mapBuilder = new MapBuilder(FXDatabase.getInstance().getGridPane(), mapData);
 
     }
 
@@ -51,7 +51,7 @@ public class GameLogic {
             Player player = new Player(mapData, "mamad");
             mapData.setCurrentPlayer(player);
         }
-        scene.setOnKeyPressed(new KeyLogger(mapData,this));
+        scene.setOnKeyPressed(new KeyLogger(mapData, this));
         statusBar();
         playerStatus();
 
@@ -275,7 +275,8 @@ public class GameLogic {
         timerThread.start();
         scene.setRoot(pane);
     }
-//
+
+
     public void saveMapData() {
         try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/resources/assets/save/lastgame/mapdata.txt", false);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
@@ -292,10 +293,10 @@ public class GameLogic {
 
     }
 
-    public void savePlayers(){
+    public void savePlayers() {
         try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/resources/assets/save/players.txt", false);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-            for(Player player: mapData.getPlayers()) {
+            for (Player player : mapData.getPlayers()) {
                 try {
                     objectOutputStream.writeObject(player);
                 } catch (IOException e) {

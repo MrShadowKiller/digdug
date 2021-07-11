@@ -36,7 +36,7 @@ public class MapBuilder {
         ArrayList<ArrayList<Block>> dirts = mapData.getBlocks();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 12; j++) {
-                dirts.get(i).add(new Dirt(i,j));
+                dirts.get(i).add(new Dirt(i, j));
                 ImageView imageView = new ImageView("assets/black.png");
                 imageView.setFitHeight(50);
                 imageView.setFitWidth(50);
@@ -62,7 +62,7 @@ public class MapBuilder {
                 continue;
             }
             gridPane.getChildren().remove(blocks.get(f).get(m).getImageView());
-            blocks.get(f).set(m, new Stone(f,m,mapData));
+            blocks.get(f).set(m, new Stone(f, m, mapData));
             gridPane.add(blocks.get(f).get(m).getImageView(), m, f);
         }
     }
@@ -128,9 +128,9 @@ public class MapBuilder {
     public void creatRandomEnemies(int ballons) {
         ArrayList<Enemy> enemies = mapData.getEnemies();
         for (int i = 0; i < ballons; i++) {
-            mapData.getEnemies().add(new Balloon(1, i,2, mapData));
+            mapData.getEnemies().add(new Balloon(1, i, 2, mapData));
         }
-        mapData.getEnemies().add(new Dragon(1, ballons,3, mapData));
+        mapData.getEnemies().add(new Dragon(1, ballons, 3, mapData));
 
 
     }
