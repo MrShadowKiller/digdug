@@ -1,15 +1,17 @@
 package ir.ac.kntu.logic;
 
 import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.logic.Map.MapBuilder;
+import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.Enemy;
 import ir.ac.kntu.modules.characters.Player;
+import ir.ac.kntu.util.KeyLogger;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

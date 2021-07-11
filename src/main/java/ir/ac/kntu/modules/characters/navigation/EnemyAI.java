@@ -1,7 +1,7 @@
-package ir.ac.kntu.modules.characters;
+package ir.ac.kntu.modules.characters.navigation;
 
-import ir.ac.kntu.logic.MapData;
-import javafx.scene.layout.GridPane;
+import ir.ac.kntu.logic.Map.MapData;
+import ir.ac.kntu.modules.characters.Enemy;
 
 import java.io.Serializable;
 import java.util.ArrayList;

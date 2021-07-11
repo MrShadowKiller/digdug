@@ -1,4 +1,4 @@
-package ir.ac.kntu.logic;
+package ir.ac.kntu.logic.Map;
 
 import ir.ac.kntu.fxDatabase;
 import ir.ac.kntu.modules.characters.Enemy;

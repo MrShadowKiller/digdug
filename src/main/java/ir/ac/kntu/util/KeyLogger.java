@@ -1,11 +1,12 @@
-package ir.ac.kntu.logic;
+package ir.ac.kntu.util;
 
+import ir.ac.kntu.logic.GameLogic;
+import ir.ac.kntu.logic.Map.MapData;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import static ir.ac.kntu.modules.characters.Direction.*;
-import static ir.ac.kntu.modules.characters.Direction.LEFT;
+import static ir.ac.kntu.modules.characters.navigation.Direction.*;
+import static ir.ac.kntu.modules.characters.navigation.Direction.LEFT;
 
 public class KeyLogger implements EventHandler<KeyEvent> {
     private final MapData mapData;

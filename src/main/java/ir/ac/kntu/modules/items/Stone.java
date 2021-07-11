@@ -1,7 +1,7 @@
 package ir.ac.kntu.modules.items;
 
 import ir.ac.kntu.fxDatabase;
-import ir.ac.kntu.logic.MapData;
+import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.Enemy;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;

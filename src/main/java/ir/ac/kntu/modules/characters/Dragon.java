@@ -1,7 +1,7 @@
 package ir.ac.kntu.modules.characters;
 
 import ir.ac.kntu.fxDatabase;
-import ir.ac.kntu.logic.MapData;
+import ir.ac.kntu.logic.Map.MapData;
 import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

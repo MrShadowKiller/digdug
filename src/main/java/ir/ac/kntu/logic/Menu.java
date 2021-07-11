@@ -1,7 +1,8 @@
 package ir.ac.kntu.logic;
 
-import ir.ac.kntu.GameButton;
+import ir.ac.kntu.util.GameButton;
 import ir.ac.kntu.fxDatabase;
+import ir.ac.kntu.logic.Map.MapData;
 import ir.ac.kntu.modules.characters.Player;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -19,7 +20,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class Menu {
     private final Stage stage;

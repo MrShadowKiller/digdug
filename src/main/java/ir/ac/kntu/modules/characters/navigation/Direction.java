@@ -1,4 +1,4 @@
-package ir.ac.kntu.modules.characters;
+package ir.ac.kntu.modules.characters.navigation;
 
 import java.io.Serializable;
 
