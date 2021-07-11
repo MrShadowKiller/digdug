@@ -51,16 +51,8 @@ public class MapData implements Serializable {
         return players;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
-    }
-
     public ArrayList<Enemy> getEnemies() {
         return enemies;
-    }
-
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
     }
 
     public Player getCurrentPlayer() {
@@ -70,10 +62,6 @@ public class MapData implements Serializable {
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
-
-//    public GridPane getGridPane() {
-//        return gridPane;
-//    }
 
     public boolean isGameFinished() {
         return gameFinished;

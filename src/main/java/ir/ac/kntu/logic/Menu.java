@@ -25,7 +25,6 @@ public class Menu {
     private final Stage stage;
     private final Scene scene;
     private final BorderPane pane;
-    private Player player;
     private MapData mapData;
 
     public Menu(Stage stage, Scene scene, BorderPane pane) {

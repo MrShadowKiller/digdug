@@ -239,10 +239,6 @@ public class Player implements Alive, Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getTotalGames() {
         return totalGames;
     }
@@ -275,20 +271,8 @@ public class Player implements Alive, Serializable {
         this.hp = hp;
     }
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
-    }
-
-    public boolean isShooting() {
-        return isShooting;
-    }
-
-    public void setShooting(boolean shooting) {
-        isShooting = shooting;
     }
 
     public int getPlayerHighScore() {
@@ -318,9 +302,5 @@ public class Player implements Alive, Serializable {
 
     public int getPlayerScore() {
         return playerScore;
-    }
-
-    public void setPlayerScore(int playerScore) {
-        this.playerScore = playerScore;
     }
 }

@@ -100,22 +100,6 @@ public abstract class Enemy implements Alive, Serializable {
         return col;
     }
 
-    public double getxSpeed() {
-        return xSpeed;
-    }
-
-    public void setxSpeed(double xSpeed) {
-        this.xSpeed = xSpeed;
-    }
-
-    public double getySpeed() {
-        return ySpeed;
-    }
-
-    public void setySpeed(double ySpeed) {
-        this.ySpeed = ySpeed;
-    }
-
     public int getHp() {
         return hp;
     }

@@ -59,10 +59,6 @@ public class FXDatabase {
         return ballonImages;
     }
 
-    public void setBallonImages(ArrayList<Image> ballonImages) {
-        this.ballonImages = ballonImages;
-    }
-
     public ArrayList<Image> getDragonImages() {
         return dragonImages;
     }

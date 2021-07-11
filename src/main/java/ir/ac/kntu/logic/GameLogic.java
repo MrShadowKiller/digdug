@@ -192,6 +192,7 @@ public class GameLogic {
 
     public void gameLost() {
 //        savePlayers();
+        mapData.getCurrentPlayer().setTotalGames(mapData.getCurrentPlayer().getTotalGames() + 1);
         mapData.setGameFinished(true);
         for (Enemy enemy : mapData.getEnemies()) {
             enemy.stopEnemyAI();
@@ -231,6 +232,7 @@ public class GameLogic {
 
     public void gameWon() {
 //        savePlayers();
+        mapData.getCurrentPlayer().setTotalGames(mapData.getCurrentPlayer().getTotalGames() + 1);
         mapData.setGameFinished(true);
         for (Enemy enemy : mapData.getEnemies()) {
             enemy.stopEnemyAI();
