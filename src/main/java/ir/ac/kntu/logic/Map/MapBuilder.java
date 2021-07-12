@@ -99,7 +99,7 @@ public class MapBuilder {
     public void creatRandEmptyRowsEnemies() {
         for (int i = 0; i < 2; i++) {
             int f = randomIntExcept(0, 9);
-            int m = randomIntExcept(-1, 11);
+            int m = randomIntExcept(0, 11);
             System.out.println(f + "  " + m);
             if (f <= 8 - 3) {
                 Block dirt = mapData.getBlocks().get(f).get(m);
