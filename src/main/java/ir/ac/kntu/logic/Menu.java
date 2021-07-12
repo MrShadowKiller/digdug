@@ -1,5 +1,6 @@
 package ir.ac.kntu.logic;
 
+import ir.ac.kntu.JavaFxApplication;
 import ir.ac.kntu.util.GameButton;
 import ir.ac.kntu.FXDatabase;
 import ir.ac.kntu.logic.Map.MapData;
@@ -31,12 +32,15 @@ public class Menu {
         this.stage = stage;
         this.scene = scene;
         this.pane = pane;
-        mapData = new MapData();
     }
 
     public void startMenu() {
+        mapData = new MapData();
+        FXDatabase.getInstance().resetData();
+
         GameButton playButton = new GameButton(new Image("assets/play.png"), new Image("assets/playHold.png"));
         GameButton continueButton = new GameButton(new Image("assets/continue.png"), new Image("assets/continueHold.png"));
+
         stage.setResizable(false);
         pane.setMinSize(600, 700);
 
@@ -168,7 +172,6 @@ public class Menu {
     public void startTheGame() {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-border-width: 0 0 5 0;");
-
 
         root.setCenter(FXDatabase.getInstance().getGridPane());
         scene.setRoot(root);

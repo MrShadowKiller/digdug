@@ -11,25 +11,29 @@ public class FXDatabase {
 
     private ArrayList<Image> ballonImages;
 
-    private final ArrayList<Image> dragonImages;
+    private ArrayList<Image> dragonImages;
 
     private ImageView dragonAttack;
 
-    private final ArrayList<ImageView> enemyViewImages;
+    private ArrayList<ImageView> enemyViewImages;
 
-    private final ArrayList<Image> playerImages;
+    private ArrayList<Image> playerImages;
 
     private ImageView playerCurrent;
 
     private ImageView playerAttack;
 
-    private final ArrayList<ArrayList<ImageView>> blockViewImages;
+    private ArrayList<ArrayList<ImageView>> blockViewImages;
 
     private ImageView itemImageView;
 
     private GridPane gridPane;
 
     public FXDatabase() {
+        resetData();
+    }
+
+    public void resetData() {
         ballonImages = new ArrayList<>();
         dragonImages = new ArrayList<>();
         enemyViewImages = new ArrayList<>();

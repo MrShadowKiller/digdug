@@ -210,10 +210,12 @@ public class Player implements Alive, Serializable {
 
             for (Enemy enemy : mapData.getEnemies()) {
                 if (enemy.getRow() == row && enemy.getCol() == col) {
-                    enemy.getHit(weapon.getDamage());
-                    System.out.println("Enemy got hit at : " + row + " " + col);
-                    if (!enemy.isAlive()) {
-                        playerScore += enemy.getPoint();
+                    if (enemy.isAlive()) {
+                        enemy.getHit(weapon.getDamage());
+                        System.out.println("Enemy got hit at : " + row + " " + col);
+                        if (!enemy.isAlive()) {
+                            playerScore += enemy.getPoint();
+                        }
                     }
                 }
             }
