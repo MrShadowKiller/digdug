@@ -81,6 +81,14 @@ public abstract class Enemy implements Alive, Serializable {
         return false;
     }
 
+    public void checkEscape(){
+        if (row == 0 || row == 9 || col == 0 || col == 11){
+            mapData.getCurrentPlayer().getHit(1);
+            FXDatabase.getInstance().getGridPane().getChildren().remove(this.getCurrentImageView());
+            hp = 0;
+        }
+    }
+
     @Override
     public void move(int col, int row) {
         collisionWithPlayer(col, row);
@@ -90,6 +98,7 @@ public abstract class Enemy implements Alive, Serializable {
             GridPane.setRowIndex(getCurrentImageView(), row);
             GridPane.setColumnIndex(getCurrentImageView(), col);
         }
+        checkEscape();
     }
 
     @Override

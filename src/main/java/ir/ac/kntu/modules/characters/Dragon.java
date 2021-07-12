@@ -72,6 +72,7 @@ public class Dragon extends Enemy implements Serializable {
             GridPane.setRowIndex(getCurrentImageView(), row);
             GridPane.setColumnIndex(getCurrentImageView(), col);
         }
+        checkEscape();
     }
 
 
