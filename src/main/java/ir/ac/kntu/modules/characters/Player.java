@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Player implements Alive, Serializable {
     private final MapData mapData;
 
-    private String name;
+    private final String name;
     private int totalGames = 0;
     private int row;
     private int col;
@@ -26,7 +26,7 @@ public class Player implements Alive, Serializable {
     private int hp = 3;
     private Weapon weapon;
     private Direction direction;
-    private boolean isShooting = false;
+    private final boolean isShooting = false;
     private int playerScore = 0;
     private int playerHighScore = 0;
 

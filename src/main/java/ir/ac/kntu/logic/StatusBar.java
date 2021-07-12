@@ -13,9 +13,9 @@ public class StatusBar {
 
     private final MapData mapData;
 
-    private int minuteTimer = 0;
+    private int minuteTimer = 2;
 
-    private int secondTimer = 10;
+    private int secondTimer = 30;
 
     public StatusBar(BorderPane borderPane, MapData mapData) {
         this.borderPane = borderPane;

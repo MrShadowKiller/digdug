@@ -14,11 +14,11 @@ public class MapData implements Serializable {
 
     private ArrayList<ArrayList<Block>> blocks;
 
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     private Player currentPlayer;
 
-    private ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
 
     private boolean gameFinished = false;
 

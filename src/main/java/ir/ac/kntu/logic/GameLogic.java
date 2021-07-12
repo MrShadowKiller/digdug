@@ -33,7 +33,7 @@ public class GameLogic {
 
     private final Stage stage;
 
-    private StatusBar statusBar;
+    private final StatusBar statusBar;
 
     public GameLogic(BorderPane borderPane, Scene scene, Stage stage, MapData mapData) {
         this.scene = scene;
@@ -41,7 +41,7 @@ public class GameLogic {
         this.mapData = mapData;
         this.borderPane = borderPane;
         mapBuilder = new MapBuilder(FXDatabase.getInstance().getGridPane(), mapData);
-        statusBar = new StatusBar(borderPane,mapData);
+        statusBar = new StatusBar(borderPane, mapData);
     }
 
     public void start() {

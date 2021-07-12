@@ -18,9 +18,9 @@ public abstract class Enemy implements Alive, Serializable {
 
     private final int id;
 
-    private double xSpeed;
+    private final double xSpeed;
 
-    private double ySpeed;
+    private final double ySpeed;
 
     private int hp;
 
@@ -70,13 +70,26 @@ public abstract class Enemy implements Alive, Serializable {
         return false;
     }
 
+    public boolean collisionWithEnemy(int col, int row) {
+        for (Enemy enemy : getMapData().getEnemies()) {
+            if (enemy.isAlive()) {
+                if (enemy.getRow() == row && enemy.getCol() == col) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public void move(int col, int row) {
         collisionWithPlayer(col, row);
-        this.row = row;
-        this.col = col;
-        GridPane.setRowIndex(getCurrentImageView(), row);
-        GridPane.setColumnIndex(getCurrentImageView(), col);
+        if (!collisionWithEnemy(col,row)) {
+            this.row = row;
+            this.col = col;
+            GridPane.setRowIndex(getCurrentImageView(), row);
+            GridPane.setColumnIndex(getCurrentImageView(), col);
+        }
     }
 
     @Override

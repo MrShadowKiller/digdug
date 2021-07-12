@@ -56,32 +56,27 @@ public class Dragon extends Enemy implements Serializable {
 
     @Override
     public void move(int col, int row) {
-        try {
-            if (collisionWithPlayer(col, row)) {
-                for (Enemy enemy : getMapData().getEnemies()) {
-                    if (enemy != this) {
-                        if (enemy.getRow() == row && enemy.getCol() == col) {
-                            return;
-                        }
+        if (collisionWithPlayer(col, row)) {
+            FXDatabase.getInstance().getGridPane().add(getAttackImage(), getMapData().getCurrentPlayer().getCol(), getMapData().getCurrentPlayer().getRow());
+            attackAnimation();
+        } else {
+            for (Enemy enemy : getMapData().getEnemies()) {
+                if (enemy.isAlive()) {
+                    if (enemy.getRow() == row && enemy.getCol() == col) {
+                        return;
                     }
                 }
-                FXDatabase.getInstance().getGridPane().add(getAttackImage(), getMapData().getCurrentPlayer().getCol(), getMapData().getCurrentPlayer().getRow());
-                attackAnimation();
-
-            } else {
-                setRow(row);
-                setCol(col);
-                GridPane.setRowIndex(getCurrentImageView(), row);
-                GridPane.setColumnIndex(getCurrentImageView(), col);
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println("DRAGON MAY NOT WORK WELL");
+            setRow(row);
+            setCol(col);
+            GridPane.setRowIndex(getCurrentImageView(), row);
+            GridPane.setColumnIndex(getCurrentImageView(), col);
         }
     }
 
 
     public void attackAnimation() {
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
         pause.setOnFinished(e -> FXDatabase.getInstance().getGridPane().getChildren().remove(getAttackImage()));
         pause.play();
     }
