@@ -13,9 +13,9 @@ public class StatusBar {
 
     private final MapData mapData;
 
-    private int minuteTimer = 2;
+    private int minuteTimer = 0;
 
-    private int secondTimer = 30;
+    private int secondTimer = 10;
 
     public StatusBar(BorderPane borderPane, MapData mapData) {
         this.borderPane = borderPane;
@@ -100,9 +100,6 @@ public class StatusBar {
         if (secondTimer == -1) {
             secondTimer = 59;
             minuteTimer--;
-        }
-        if (minuteTimer == 0 && secondTimer == 0) {
-            mapData.setGameFinished(true);
         }
         if (secondTimer >= 10) {
             timer.setText("Time : " + minuteTimer + ":" + secondTimer);
